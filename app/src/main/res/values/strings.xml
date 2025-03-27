@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">ACC Pause</string>
+    <string name="home_button">CHARGE</string>
+    <string name="nav_item1">Charge</string>
+    <string name="nav_item2">ACC Values</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="charging_capacity_label">Charging capacity</string>
+    <string name="acc_daemon_enable_label">ACC daemon</string>
+    <string name="acc_daemon_enable_description">Enable the ACC daemon</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
