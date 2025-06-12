@@ -2,6 +2,7 @@ package com.alba.accpause;
 
 import android.app.Application;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.room.Room;
 
 import com.alba.accpause.database.AppDatabase;
@@ -18,6 +19,8 @@ public class ACCPause extends Application {
         this.updateDatabase();
         DynamicColors.applyToActivitiesIfAvailable(this);
         database = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "ACC_configs").build();
+        // Force dark mode for the entire application (just till it is completed)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
     }
 
     public AppDatabase getDatabase() {

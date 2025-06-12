@@ -6,7 +6,20 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="charging_capacity_label">Charging capacity</string>
     <string name="acc_daemon_enable_label">ACC daemon</string>
-    <string name="acc_daemon_enable_description">Enable the ACC daemon</string>
+    <string name="acc_daemon_enable_description">Enable the ACC daemon.</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="charge_once_label">Charge once to…</string>
+    <string name="charge_once_description">One-time charge to a value with optional current limit.</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="charge_once_to_title">Charge once to…</string>
+    <string name="level_to_charge_to_string">Level to charge to</string>
+    <string name="voltage_limit_label">Current limit</string>
+    <!-- Placeholders -->
+    <string name="charging_capacity_description">Stop charging at %1$s. Resume charging at %2$s</string>
+    <string name="charging_current_description">Limit charging to %1$s mA.</string>
+    <string name="charging_current_description_no_limit">No limit currently set</string>
+    <string name="temp_limit_label">Temperature limit</string>
+    <string name="fake_passthr_label">Fake pass through</string>
+    <string name="fake_passthr_description">Sets the resume charging value one percent lower than the pause limit.</string>
+
 </resources>

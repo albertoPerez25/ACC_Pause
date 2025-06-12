@@ -82,7 +82,6 @@ public class HomeFragment extends Fragment {
             onButtonClick(v,pause,backgroundTintList);
         });
 
-
         return view;
         }
 

@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
                     exitAnimation = R.anim.fade_out;
                 } else if (itemId == R.id.item_2) {
                     vibrator.vibrate(combinedClick);
-                    selectedFragment = new FragmentConfigs();
+                    selectedFragment = new ConfigsFragment();
                     enterAnimation = R.anim.fade_in;
                     exitAnimation = R.anim.fade_out;
 
