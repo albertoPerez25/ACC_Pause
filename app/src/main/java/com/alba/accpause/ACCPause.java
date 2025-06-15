@@ -10,6 +10,8 @@ import com.alba.accpause.database.DataDao;
 import com.alba.accpause.database.ProcessParser;
 import com.google.android.material.color.DynamicColors;
 
+import java.util.concurrent.CountDownLatch;
+
 public class ACCPause extends Application {
 
     private AppDatabase database;
@@ -34,7 +36,9 @@ public class ACCPause extends Application {
     private void updateDatabase(){
         new Thread(() -> {
             ProcessParser.updateConfigsDatabase("/dev/acc --set",getApplicationContext());
+            databaseInitialized.countDown();
         }).start();
     }
+    public static CountDownLatch databaseInitialized = new CountDownLatch(1);
 }
 

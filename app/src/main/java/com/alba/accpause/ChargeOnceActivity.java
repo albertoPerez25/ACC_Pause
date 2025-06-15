@@ -46,7 +46,7 @@ public class ChargeOnceActivity extends AppCompatActivity {
         chargeToSlider = findViewById(R.id.chargeToSlider);
         chargeToCurrentSlider = findViewById(R.id.chargeToCurrentSlider);
 
-        binding.fab.setOnClickListener(new View.OnClickListener() {
+        binding.saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -66,7 +66,7 @@ public class ChargeOnceActivity extends AppCompatActivity {
                 }
 
                 Snackbar.make(view, finalChargeToValue, Snackbar.LENGTH_LONG)
-                        .setAnchorView(R.id.fab)
+                        .setAnchorView(R.id.saveButton)
                         .setAction("Action", null).show();
                 Toast.makeText(view.getContext(), finalChargeToValue, Toast.LENGTH_SHORT).show();
                 finish();

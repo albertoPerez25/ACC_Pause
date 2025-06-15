@@ -15,11 +15,13 @@
     <string name="level_to_charge_to_string">Level to charge to</string>
     <string name="voltage_limit_label">Current limit</string>
     <!-- Placeholders -->
-    <string name="charging_capacity_description">Stop charging at %1$s. Resume charging at %2$s</string>
+    <string name="charging_capacity_description">Stop charging at %1$s%%. Resume charging at %2$s%%.</string>
+    <string name="temp_limit_description">Stop charging at %1$s ºC. Resume charging at %2$s ºC.</string>
     <string name="charging_current_description">Limit charging to %1$s mA.</string>
     <string name="charging_current_description_no_limit">No limit currently set</string>
     <string name="temp_limit_label">Temperature limit</string>
     <string name="fake_passthr_label">Fake pass through</string>
     <string name="fake_passthr_description">Sets the resume charging value one percent lower than the pause limit.</string>
+    <string name="save_button">Save</string>
 
 </resources>

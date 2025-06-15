@@ -100,6 +100,15 @@
             android:valueTo="100.0"
             app:values="@array/initial_slider_values"
             />
+        <com.google.android.material.slider.Slider
+            android:id="@+id/passThgLevelSlider"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:stepSize="5.0"
+            android:valueFrom="0.0"
+            android:valueTo="100.0"
+            app:values="@array/initial_slider_values"/>
         <TextView
             android:id="@+id/capacityLabel"
             android:clickable="false"
@@ -107,9 +116,6 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start|center_vertical"
-            android:stepSize="5.0"
-            android:valueFrom="0.0"
-            android:valueTo="100.0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0"
             app:layout_constraintStart_toStartOf="parent"
@@ -221,13 +227,13 @@
             android:layout_height="wrap_content"
             android:text="@string/temp_limit_label"
             android:textSize="20sp" />
-        <com.google.android.material.slider.Slider
+        <com.google.android.material.slider.RangeSlider
             android:id="@+id/tempSlider"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:valueFrom="0.0"
-            android:valueTo="5000.0"
-            android:stepSize="500.0" />
+            android:valueFrom="20.0"
+            android:valueTo="55.0"
+            android:stepSize="5.0" />
         <TextView
             android:id="@+id/tempLabel"
             android:clickable="false"

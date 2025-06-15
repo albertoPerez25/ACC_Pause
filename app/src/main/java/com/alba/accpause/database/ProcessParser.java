@@ -4,7 +4,6 @@ import android.content.Context;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.InputStream;
 
 import com.alba.accpause.ACCPause;
 
@@ -29,11 +28,18 @@ public class ProcessParser {
 
             // Read the output
             while ((line = reader.readLine()) != null) {
+                if (!line.contains("="))
+                    continue;
                 output.append(line).append("\n");
-                String[] parts = line.split("=");
+                String[] parts = {"",""};
+                String[] split = line.split("=");
 
-                if(parts.length != 2)
-                    continue; // Wrong file format
+                for(int j = 0; j < 2; j++){
+                    if (j >= split.length)
+                        parts[j] = "0";
+                    else
+                        parts[j] = split[j];
+                }
 
                 data[i] = new Data();
                 //data[i].id = i;
@@ -58,10 +64,12 @@ public class ProcessParser {
             ACCPause application = (ACCPause) context;
             DataDao dataDao = application.getDataDao();
             i = 0;
+
             while (data[i] != null){
                 dataDao.insert(data[i]);
                 i++;
             }
+
 
             // ACC Daemon status is printed with "accd,"
             process = Runtime.getRuntime().exec("su -c /dev/accd,");
@@ -69,12 +77,10 @@ public class ProcessParser {
 
             data[i] = new Data();
             data[i].key = "daemon_enabled";
-            switch (exitCode){
-                case 8:
-                    data[i].value = "true";
-                    break;
-                default:
-                    data[i].value = "false";
+            if (exitCode == 0) {
+                data[i].value = "true";
+            } else {
+                data[i].value = "false";
             }
 
             dataDao.insert(data[i]);
