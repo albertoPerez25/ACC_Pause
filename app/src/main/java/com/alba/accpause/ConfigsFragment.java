@@ -134,13 +134,11 @@ public class ConfigsFragment extends Fragment {
                 boolean acc_enabled;
                 try{
                     if (isChecked) {
-                        //Toast.makeText(getActivity(), "ACC Enabled", Toast.LENGTH_SHORT).show();
-                        Snackbar.make(view, "ACC Enabled", Snackbar.LENGTH_SHORT).show();
+                        //Snackbar.make(view, "ACC Enabled", Snackbar.LENGTH_SHORT).setAnchorView(R.id.configsFragment).show();
                         Runtime.getRuntime().exec("su -c /dev/accd");
                         acc_enabled = true;
                     } else {
-                        //Toast.makeText(getActivity(), "ACC Disabled", Toast.LENGTH_SHORT).show();
-                        Snackbar.make(view, "ACC Disabled", Snackbar.LENGTH_SHORT).show();
+                        //Snackbar.make(view, "ACC Disabled", Snackbar.LENGTH_SHORT).setAnchorView(R.id.configsFragment).show();
                         Runtime.getRuntime().exec("su -c /dev/accd.");
                         acc_enabled = false;
                     }
@@ -165,8 +163,7 @@ public class ConfigsFragment extends Fragment {
                 boolean passThr_enabled;
                 try{
                     if (isChecked) {
-                        //Toast.makeText(getActivity(), "ACC Enabled", Toast.LENGTH_SHORT).show();
-                        Snackbar.make(view, "Pass through enabled", Snackbar.LENGTH_SHORT).show();
+                        //Snackbar.make(view, "Pass through enabled", Snackbar.LENGTH_SHORT).show();
                         Runtime.getRuntime().exec("su -c /dev/acca --set prioritize_batt_idle_mode=true");
                         passThr_enabled = true;
                         float pause = passThrSlider.getValue();
@@ -176,8 +173,7 @@ public class ConfigsFragment extends Fragment {
                         passThrSlider.setVisibility(View.VISIBLE);
 
                     } else {
-                        //Toast.makeText(getActivity(), "ACC Disabled", Toast.LENGTH_SHORT).show();
-                        Snackbar.make(view, "Pass through disabled", Snackbar.LENGTH_SHORT).show();
+                        //Snackbar.make(view, "Pass through disabled", Snackbar.LENGTH_SHORT).setAnchorView(R.id.configsFragment).show();
                         Runtime.getRuntime().exec("su -c /dev/acca  --set prioritize_batt_idle_mode=false");
                         passThr_enabled = false;
                         Float pause = chargeLevelSlider.getValues().get(1);
