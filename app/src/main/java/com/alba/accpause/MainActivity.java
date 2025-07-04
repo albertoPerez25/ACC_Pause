@@ -22,6 +22,8 @@ import com.alba.accpause.databinding.ActivityMainBinding;
 import com.google.android.material.color.DynamicColors;
 import com.google.android.material.navigation.NavigationBarView;
 
+import com.alba.accpause.HomeFragment;
+
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding activityBinding;
@@ -81,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                     newTransaction.setCustomAnimations(finalEnterAnimation, 0); // Only fade_zoom_in for the new fragment
                     newTransaction.replace(R.id.fragment_container, finalSelectedFragment);
                     newTransaction.commit();
+
                 }, animDuration);
                 return true;
             }

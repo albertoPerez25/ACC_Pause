@@ -1,14 +1,23 @@
-package com.alba.accpause.database;
-import android.content.Context;
+package com.alba.accpause.batData;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 
-import com.alba.accpause.ACCPause;
+public class BatteryInfoParser {
+    private HashMap<String,String> batInfo = new HashMap<>();
+    private final String command;
 
-public class ProcessParser {
-    public static int updateConfigsDatabase(String command, Context context) {
+    public BatteryInfoParser(){
+        this.command = "/dev/acca -i";
+    }
+
+    public BatteryInfoParser(String command){
+        this.command = command;
+    }
+
+    public HashMap<String,String> getBatteryInfo() {
         try {
             Process process = Runtime.getRuntime().exec("su -c "+command);
 
@@ -23,16 +32,14 @@ public class ProcessParser {
             String line;
             StringBuilder output = new StringBuilder();
             StringBuilder errorOutput = new StringBuilder();
-            Data [] data = new Data[99];
-            int i = 0;
 
             // Read the output
             while ((line = reader.readLine()) != null) {
-                if (!line.contains("="))
+                if (!line.contains(" "))
                     continue;
                 output.append(line).append("\n");
                 String[] parts = {"",""};
-                String[] split = line.split("=");
+                String[] split = line.split(" ");
 
                 for(int j = 0; j < 2; j++){
                     if (j >= split.length)
@@ -41,11 +48,7 @@ public class ProcessParser {
                         parts[j] = split[j];
                 }
 
-                data[i] = new Data();
-                //data[i].id = i;
-                data[i].key = parts[0];
-                data[i].value = parts[1];
-                i++;
+                batInfo.put(parts[0],parts[1]);
             }
 
             // Read the error output
@@ -57,38 +60,15 @@ public class ProcessParser {
                 // Process exited with an error. Handle the error output
                 android.util.Log.e("ExternalProcess", "Error exit code: " + exitCode);
                 android.util.Log.e("ExternalProcess", "Error output:\n" + errorOutput);
-                return exitCode;
+                return batInfo; //TODO
             }
 
-            // Process finished successfully. Parse the output
-            ACCPause application = (ACCPause) context;
-            DataDao dataDao = application.getDataDao();
-            i = 0;
+            // Process finished successfully. Return the output
 
-            while (data[i] != null){
-                dataDao.insert(data[i]);
-                i++;
-            }
-
-
-            // ACC Daemon status is printed with "accd,"
-            process = Runtime.getRuntime().exec("su -c /dev/accd,");
-            exitCode = process.waitFor();
-
-            data[i] = new Data();
-            data[i].key = "daemon_enabled";
-            if (exitCode == 0) {
-                data[i].value = "true";
-            } else {
-                data[i].value = "false";
-            }
-
-            dataDao.insert(data[i]);
-
-            return 0;
+            return batInfo;
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
-            return 100; // Other error
+            return batInfo; // Other error //TODO
         }
     }
 }

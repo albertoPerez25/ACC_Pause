@@ -1,21 +1,32 @@
 package com.alba.accpause;
 
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Objects;
+
+import com.alba.accpause.batData.BatteryInfoParser;
+import com.alba.accpause.database.Data;
+import com.alba.accpause.database.DataDao;
+import com.alba.accpause.database.DataParser;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,31 +34,36 @@ import java.util.Objects;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private Context context;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public HomeFragment() {
         // Required empty public constructor
     }
 
+    boolean chrEnabled = true;
+    BatteryInfoParser batInfo;
+    private static final long UPDATE_INTERVAL_MILLIS = 2000; // ms
+    private Handler handler;
+    private Runnable runnable;
+
+    private TextView tempValue;
+    private TextView currentValue;
+    private TextView levelValue;
+    private TextView stateValue;
+    private TextView chargingValue;
+    private TextView powerValue;
+    private Button pause;
+    private ColorStateList backgroundTintList;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
+     * @return A new instance of fragment FragmentConfigs.
      */
-    // TODO: Rename and change types and number of parameters
-    boolean chrEnabled = true;
-    int primaryColor;
     public static HomeFragment newInstance(String param1, String param2) {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
@@ -58,13 +74,30 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        batInfo = new BatteryInfoParser();
+        handler = new Handler(Looper.getMainLooper()); // Ensures it runs on the UI thread
+        runnable = this::updateBatteryInfo;
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        // Stop the periodic task when the Activity is paused to prevent leaks or unnecessary work
+        handler.removeCallbacks(runnable);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Start the periodic task when the Activity is resumed
     }
 
     @Override
@@ -72,20 +105,46 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         // Inflate the layout for this fragment
-        // Also I get a reference to the button
-        Button pause = view.findViewById(R.id.filledButton); // Replace with your button's ID
+        // I also get a reference to the button
+        pause = view.findViewById(R.id.filledButton);
+        tempValue = view.findViewById(R.id.tempValue);
+        currentValue = view.findViewById(R.id.currentValue);
+        levelValue = view.findViewById(R.id.levelValue);
+        stateValue = view.findViewById(R.id.stateValue);
+        chargingValue = view.findViewById(R.id.chargingValue);
+        powerValue = view.findViewById(R.id.powerValue);
+
 
         //Get the material color of the button
-        ColorStateList backgroundTintList = pause.getBackgroundTintList();
+        backgroundTintList = pause.getBackgroundTintList();
 
         pause.setOnClickListener(v -> {
-            onButtonClick(v,pause,backgroundTintList);
+            onButtonClick(v,backgroundTintList);
         });
 
         return view;
-        }
+    }
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        // Start the periodic task when the Activity is resumed
+        handler.postDelayed(runnable, 300);
+    }
 
-    public void onButtonClick(View view, Button pause, ColorStateList primaryColor){
+    public void updateBatteryInfo(){
+        HashMap<String,String> bInfo = batInfo.getBatteryInfo();
+        tempValue.setText(bInfo.get("temp"));
+        currentValue.setText(bInfo.get("current_now"));
+        levelValue.setText(bInfo.get("level"));
+        stateValue.setText(bInfo.get("status"));
+        powerValue.setText(bInfo.get("power_now"));
+        if (chrEnabled)
+            chargingValue.setText("Enabled");
+        else
+            chargingValue.setText("Disabled");
+
+        handler.postDelayed(runnable, UPDATE_INTERVAL_MILLIS);
+    }
+
+    public void onButtonClick(View view, ColorStateList primaryColor){
 
         if (chrEnabled) {
 

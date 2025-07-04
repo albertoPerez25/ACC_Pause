@@ -7,7 +7,7 @@ import androidx.room.Room;
 
 import com.alba.accpause.database.AppDatabase;
 import com.alba.accpause.database.DataDao;
-import com.alba.accpause.database.ProcessParser;
+import com.alba.accpause.database.DataParser;
 import com.google.android.material.color.DynamicColors;
 
 import java.util.concurrent.CountDownLatch;
@@ -35,7 +35,7 @@ public class ACCPause extends Application {
 
     private void updateDatabase(){
         new Thread(() -> {
-            ProcessParser.updateConfigsDatabase("/dev/acc --set",getApplicationContext());
+            DataParser.updateConfigsDatabase("/dev/acc --set",getApplicationContext());
             databaseInitialized.countDown();
         }).start();
     }

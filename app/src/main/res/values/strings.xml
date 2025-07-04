@@ -21,4 +21,10 @@
     <string name="charging_capacity_description">Stop charging at %1$s%%. Resume charging at %2$s%%.</string>
     <string name="temp_limit_description">Stop charging at %1$s ºC. Resume charging at %2$s ºC.</string>
     <string name="charging_current_description">Limit charging to %1$s mA.</string>
+    <string name="stat_name_temp">Temp</string>
+    <string name="stat_name_current">Current</string>
+    <string name="stat_name_level">Level</string>
+    <string name="stat_name_state">State</string>
+    <string name="stat_name_charging">Charging</string>
+    <string name="stat_name_power">Power</string>
 </resources>
