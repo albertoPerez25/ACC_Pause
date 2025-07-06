@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">ACC Pause</string>
     <string name="home_button">Disable charging</string>
-    <string name="nav_item1">Charge</string>
-    <string name="nav_item2">ACC Values</string>
+    <string name="nav_item1">Stats</string>
+    <string name="nav_item2">ACC Configs</string>
     <string name="charging_capacity_label">Charging capacity</string>
     <string name="acc_daemon_enable_label">ACC daemon</string>
     <string name="acc_daemon_enable_description">Enable the ACC daemon.</string>

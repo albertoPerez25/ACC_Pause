@@ -410,17 +410,19 @@ public class ConfigsFragment extends Fragment {
                             chargeLevelSlider.setVisibility(View.GONE);
                             passThrSlider.setVisibility(View.VISIBLE);
                             fakePassThrSwitch.setChecked(true);
+                            fakePassThrSwitch.jumpDrawablesToCurrentState(); // Update visual state immediately
                         } else {
                             chargeLevelSlider.setVisibility(View.VISIBLE); // Ensure it's visible if not prioritized
                             passThrSlider.setVisibility(View.GONE);
                             fakePassThrSwitch.setChecked(false);
+                            fakePassThrSwitch.jumpDrawablesToCurrentState(); // Update visual state immediately
                         }
 
                         currentSlider.setValue(finalChargeCurrentValue);
                         currentLabel.setText(finalCurrentLimitDescription);
 
                         tempSlider.setValues(finalTempInitialValues);
-                        tempLabel.setText(getString(R.string.temp_limit_description, finalTempLowerString, finalTempUpperString));
+                        tempLabel.setText(getString(R.string.temp_limit_description, finalTempUpperString, finalTempLowerString));
 
                         enableDaemonSwitch.setOnCheckedChangeListener(null); // Temporarily remove listener to prevent callback during programmatic set
                         enableDaemonSwitch.setChecked(finalAccEnabledFromDb);
@@ -451,7 +453,7 @@ public class ConfigsFragment extends Fragment {
         final String finalPause_capacity = pause_capacity.substring(0, pause_capacity.length()-2);
         //Toast.makeText(getActivity(), finalResume_capacity+" "+finalPause_capacity, Toast.LENGTH_SHORT).show();
         //Snackbar.make(view, finalResume_capacity+" "+finalPause_capacity, Snackbar.LENGTH_SHORT).show();
-        Runtime.getRuntime().exec("su -c /dev/acc " + finalPause_capacity + " " + finalResume_capacity);
+        Runtime.getRuntime().exec("su -c /dev/acca " + finalPause_capacity + " " + finalResume_capacity);
 
         capacityLabel.setText(getString(R.string.charging_capacity_description, finalPause_capacity, finalResume_capacity));
 
@@ -477,10 +479,11 @@ public class ConfigsFragment extends Fragment {
         final String finalResume_capacity = resume_capacity.substring(0, resume_capacity.length()-2);
         final String finalPause_capacity = pause_capacity.substring(0, pause_capacity.length()-2);
 
-        Runtime.getRuntime().exec("su -c /dev/acc --set max_temp=" + finalPause_capacity);
-        Runtime.getRuntime().exec("su -c /dev/acc --set resume_temp=" + finalResume_capacity);
+        Runtime.getRuntime().exec("su -c /dev/acca --set resume_temp=" + finalResume_capacity);
 
-        capacityLabel.setText(getString(R.string.temp_limit_description, finalPause_capacity, finalResume_capacity));
+        Runtime.getRuntime().exec("su -c /dev/acca --set max_temp=" + finalPause_capacity);
+
+        tempLabel.setText(getString(R.string.temp_limit_description, finalPause_capacity , finalResume_capacity ));
 
         new Thread(() -> {
             DataDao dataDao = ((ACCPause) context.getApplicationContext()).getDataDao();
@@ -492,6 +495,7 @@ public class ConfigsFragment extends Fragment {
             resumeData.value = finalResume_capacity; //Resume
 
             dataDao.update(pauseData);
+            dataDao.update(resumeData);
         }).start();
 
         return new String[]{finalResume_capacity,finalPause_capacity};

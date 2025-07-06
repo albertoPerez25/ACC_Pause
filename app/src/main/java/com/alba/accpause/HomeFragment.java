@@ -98,6 +98,7 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         // Start the periodic task when the Activity is resumed
+        handler.postDelayed(runnable, 300);
     }
 
     @Override
@@ -125,8 +126,7 @@ public class HomeFragment extends Fragment {
         return view;
     }
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        // Start the periodic task when the Activity is resumed
-        handler.postDelayed(runnable, 300);
+
     }
 
     public void updateBatteryInfo(){
