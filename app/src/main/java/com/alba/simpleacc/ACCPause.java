@@ -1,13 +1,13 @@
-package com.alba.accpause;
+package com.alba.simpleacc;
 
 import android.app.Application;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.room.Room;
 
-import com.alba.accpause.database.AppDatabase;
-import com.alba.accpause.database.DataDao;
-import com.alba.accpause.database.DataParser;
+import com.alba.simpleacc.database.AppDatabase;
+import com.alba.simpleacc.database.DataDao;
+import com.alba.simpleacc.database.DataParser;
 import com.google.android.material.color.DynamicColors;
 
 import java.util.concurrent.CountDownLatch;

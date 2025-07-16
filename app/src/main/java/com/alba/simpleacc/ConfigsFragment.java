@@ -1,4 +1,4 @@
-package com.alba.accpause;
+package com.alba.simpleacc;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,9 +15,8 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alba.accpause.ACCPause;
-import com.alba.accpause.database.Data;
-import com.alba.accpause.database.DataDao;
+import com.alba.simpleacc.database.Data;
+import com.alba.simpleacc.database.DataDao;
 import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.slider.RangeSlider;
 import com.google.android.material.slider.Slider;
@@ -27,34 +26,17 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ConfigsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class ConfigsFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private MaterialSwitch enableDaemonSwitch;
     private RangeSlider chargeLevelSlider;
-    private float chargeLevelUpperValue;
-    private float chargeLevelLowerValue;
     private Context context;
     private CompoundButton.OnCheckedChangeListener daemonSwitch_listener;
     private Slider currentSlider;
     private String currentValue;
-    private float chargeCurrentValue;
     private TextView capacityLabel;
     private TextView currentLabel;
     private MaterialSwitch fakePassThrSwitch;
-    private CompoundButton.OnCheckedChangeListener passThrSwitch_listener;
     private Slider passThrSlider;
     private RangeSlider tempSlider;
     private TextView tempLabel;
@@ -63,23 +45,6 @@ public class ConfigsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentConfigs.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ConfigsFragment newInstance(String param1, String param2) {
-        ConfigsFragment fragment = new ConfigsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -90,10 +55,6 @@ public class ConfigsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -135,11 +96,11 @@ public class ConfigsFragment extends Fragment {
                 try{
                     if (isChecked) {
                         //Snackbar.make(view, "ACC Enabled", Snackbar.LENGTH_SHORT).setAnchorView(R.id.configsFragment).show();
-                        Runtime.getRuntime().exec("su -c /dev/accd");
+                        Runtime.getRuntime().exec(context.getString(R.string.command_start_acc));
                         acc_enabled = true;
                     } else {
                         //Snackbar.make(view, "ACC Disabled", Snackbar.LENGTH_SHORT).setAnchorView(R.id.configsFragment).show();
-                        Runtime.getRuntime().exec("su -c /dev/accd.");
+                        Runtime.getRuntime().exec(context.getString(R.string.command_disable_charging));
                         acc_enabled = false;
                     }
                     final boolean finalAcc_enabled = acc_enabled;
@@ -157,29 +118,31 @@ public class ConfigsFragment extends Fragment {
         };
         enableDaemonSwitch.setOnCheckedChangeListener(daemonSwitch_listener);
 
-        passThrSwitch_listener = new CompoundButton.OnCheckedChangeListener() {
+        //Snackbar.make(view, "Pass through enabled", Snackbar.LENGTH_SHORT).show();
+        //Snackbar.make(view, "Pass through disabled", Snackbar.LENGTH_SHORT).setAnchorView(R.id.configsFragment).show();
+        CompoundButton.OnCheckedChangeListener passThrSwitch_listener = new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 boolean passThr_enabled;
-                try{
+                try {
                     if (isChecked) {
                         //Snackbar.make(view, "Pass through enabled", Snackbar.LENGTH_SHORT).show();
-                        Runtime.getRuntime().exec("su -c /dev/acca --set prioritize_batt_idle_mode=true");
+                        Runtime.getRuntime().exec(context.getString(R.string.command_pass_through_enable));
                         passThr_enabled = true;
                         float pause = passThrSlider.getValue();
-                        setChargeLimit(pause-1,pause,view);
+                        setChargeLimit(pause - 1, pause, view);
                         passThrSlider.setValue(pause);
                         chargeLevelSlider.setVisibility(View.GONE);
                         passThrSlider.setVisibility(View.VISIBLE);
 
                     } else {
                         //Snackbar.make(view, "Pass through disabled", Snackbar.LENGTH_SHORT).setAnchorView(R.id.configsFragment).show();
-                        Runtime.getRuntime().exec("su -c /dev/acca  --set prioritize_batt_idle_mode=false");
+                        Runtime.getRuntime().exec(context.getString(R.string.command_pass_through_disable));
                         passThr_enabled = false;
                         Float pause = chargeLevelSlider.getValues().get(1);
-                        float resume = chargeLevelSlider.getValues().get(1)-5;
-                        chargeLevelSlider.setValues(resume,pause);
-                        setChargeLimit(resume,pause,view);
+                        float resume = chargeLevelSlider.getValues().get(1) - 5;
+                        chargeLevelSlider.setValues(resume, pause);
+                        setChargeLimit(resume, pause, view);
                         passThrSlider.setVisibility(View.GONE);
                         chargeLevelSlider.setVisibility(View.VISIBLE);
                     }
@@ -251,11 +214,11 @@ public class ConfigsFragment extends Fragment {
                     final String finalCurrentValue = currentValue.substring(0, currentValue.length()-2);
 
                     if (finalCurrentValue.equals("0")) { // default current limit
-                        Runtime.getRuntime().exec("su -c /dev/acca --set --current -");
+                        Runtime.getRuntime().exec(context.getString(R.string.command_default_current));
                         currentLabel.setText(getString(R.string.charging_current_description_no_limit));
                     }
                     else {
-                        Runtime.getRuntime().exec("su -c /dev/acca  --set --current " + finalCurrentValue);
+                        Runtime.getRuntime().exec(context.getString(R.string.command_max_current) + finalCurrentValue);
                         currentLabel.setText(getString(R.string.charging_current_description,finalCurrentValue));
                     }
                     Snackbar.make(view, finalCurrentValue, Snackbar.LENGTH_SHORT).show();
@@ -453,7 +416,8 @@ public class ConfigsFragment extends Fragment {
         final String finalPause_capacity = pause_capacity.substring(0, pause_capacity.length()-2);
         //Toast.makeText(getActivity(), finalResume_capacity+" "+finalPause_capacity, Toast.LENGTH_SHORT).show();
         //Snackbar.make(view, finalResume_capacity+" "+finalPause_capacity, Snackbar.LENGTH_SHORT).show();
-        Runtime.getRuntime().exec("su -c /dev/acca " + finalPause_capacity + " " + finalResume_capacity);
+        Runtime.getRuntime().exec(context.getString(R.string.command_resume_pause_capacity)
+                                    + finalPause_capacity + " " + finalResume_capacity);
 
         capacityLabel.setText(getString(R.string.charging_capacity_description, finalPause_capacity, finalResume_capacity));
 
@@ -479,9 +443,9 @@ public class ConfigsFragment extends Fragment {
         final String finalResume_capacity = resume_capacity.substring(0, resume_capacity.length()-2);
         final String finalPause_capacity = pause_capacity.substring(0, pause_capacity.length()-2);
 
-        Runtime.getRuntime().exec("su -c /dev/acca --set resume_temp=" + finalResume_capacity);
+        Runtime.getRuntime().exec(context.getString(R.string.command_resume_temp) + finalResume_capacity);
 
-        Runtime.getRuntime().exec("su -c /dev/acca --set max_temp=" + finalPause_capacity);
+        Runtime.getRuntime().exec(context.getString(R.string.command_max_temp) + finalPause_capacity);
 
         tempLabel.setText(getString(R.string.temp_limit_description, finalPause_capacity , finalResume_capacity ));
 

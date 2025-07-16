@@ -1,4 +1,4 @@
-package com.alba.accpause;
+package com.alba.simpleacc;
 
 import org.junit.Test;
 

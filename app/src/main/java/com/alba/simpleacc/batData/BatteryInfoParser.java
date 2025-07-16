@@ -1,4 +1,4 @@
-package com.alba.accpause.batData;
+package com.alba.simpleacc.batData;
 
 import java.io.BufferedReader;
 import java.io.IOException;

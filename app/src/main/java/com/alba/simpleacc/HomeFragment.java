@@ -1,13 +1,10 @@
-package com.alba.accpause;
+package com.alba.simpleacc;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.content.res.Resources;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -21,12 +18,8 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Objects;
 
-import com.alba.accpause.batData.BatteryInfoParser;
-import com.alba.accpause.database.Data;
-import com.alba.accpause.database.DataDao;
-import com.alba.accpause.database.DataParser;
+import com.alba.simpleacc.batData.BatteryInfoParser;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,7 +27,6 @@ import com.alba.accpause.database.DataParser;
  * create an instance of this fragment.
  */
 public class HomeFragment extends Fragment {
-    private Context context;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -54,8 +46,9 @@ public class HomeFragment extends Fragment {
     private TextView stateValue;
     private TextView chargingValue;
     private TextView powerValue;
-    private Button pause;
     private ColorStateList backgroundTintList;
+    private Context context;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -107,7 +100,8 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         // Inflate the layout for this fragment
         // I also get a reference to the button
-        pause = view.findViewById(R.id.filledButton);
+        Button pause = view.findViewById(R.id.disableChargingButton);
+        Button resume = view.findViewById(R.id.enableChargingButton);
         tempValue = view.findViewById(R.id.tempValue);
         currentValue = view.findViewById(R.id.currentValue);
         levelValue = view.findViewById(R.id.levelValue);
@@ -117,11 +111,10 @@ public class HomeFragment extends Fragment {
 
 
         //Get the material color of the button
-        backgroundTintList = pause.getBackgroundTintList();
+        //backgroundTintList = pause.getBackgroundTintList();
 
-        pause.setOnClickListener(v -> {
-            onButtonClick(v,backgroundTintList);
-        });
+        pause.setOnClickListener(this::pauseListener);
+        resume.setOnClickListener(this::resumeListener);
 
         return view;
     }
@@ -144,12 +137,37 @@ public class HomeFragment extends Fragment {
         handler.postDelayed(runnable, UPDATE_INTERVAL_MILLIS);
     }
 
-    public void onButtonClick(View view, ColorStateList primaryColor){
+    public void pauseListener(View view){
+        try {
+            Runtime.getRuntime().exec(context.getString(R.string.command_disable_charging));
+            Toast.makeText(getActivity(), "Charging disabled",
+                    Toast.LENGTH_SHORT).show();
+            chrEnabled = false;
+        } catch (IOException e) {
+            Toast.makeText(getActivity(), "Failed to get su permission",
+                    Toast.LENGTH_SHORT).show();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void resumeListener(View view){
+        try {
+            Runtime.getRuntime().exec(context.getString(R.string.command_enable_charging));
+            Toast.makeText(getActivity(), "Charging enabled",
+                    Toast.LENGTH_SHORT).show();
+            chrEnabled = true;
+        } catch (IOException e) {
+            Toast.makeText(getActivity(), "Failed to get su permission",
+                    Toast.LENGTH_SHORT).show();
+            throw new RuntimeException(e);
+        }
+    }
+/*    public void pauseListener(View view, ColorStateList primaryColor){
 
         if (chrEnabled) {
 
             try {
-                Runtime.getRuntime().exec("su -c /dev/acca --disable");
+                Runtime.getRuntime().exec(String.valueOf(R.string.command_disable_charging));
                 pause.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(), R.color.home_button_disabled));
                 Toast.makeText(getActivity(), "Charging disabled",
                         Toast.LENGTH_SHORT).show();
@@ -161,7 +179,7 @@ public class HomeFragment extends Fragment {
             }
         } else {
             try {
-                Runtime.getRuntime().exec("su -c /dev/acca --enable");
+                Runtime.getRuntime().exec(String.valueOf(R.string.command_enable_charging));
                 pause.setBackgroundTintList(primaryColor);
                 Toast.makeText(getActivity(), "Charging enabled",
                         Toast.LENGTH_SHORT).show();
@@ -173,4 +191,5 @@ public class HomeFragment extends Fragment {
             }
         }
     }
+    */
 }

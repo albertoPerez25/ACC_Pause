@@ -297,22 +297,49 @@
                     app:layout_constraintVertical_bias="1.0" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_row="3"
+            android:layout_column="1"
+            android:padding="8dp">
+            <Button
+                android:id="@+id/disableChargingButton"
+                style="@style/Widget.Material3.Button"
+                android:layout_width="175dp"
+                android:layout_height="110dp"
+                android:text="@string/home_disable_charging"
+                android:textStyle="bold"
+                android:padding="8dp"
+                android:textSize="25sp"
+                android:visibility="visible"
+                app:cornerRadius="25dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_row="3"
+            android:layout_column="0"
+            android:padding="8dp">
+            <Button
+                android:id="@+id/enableChargingButton"
+                style="@style/Widget.Material3.Button"
+                android:layout_width="175dp"
+                android:layout_height="110dp"
+                android:text="@string/home_enable_charging"
+                android:textStyle="bold"
+                android:textSize="25sp"
+                android:visibility="visible"
+                app:cornerRadius="25dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                />
+        </LinearLayout>
     </GridLayout>
-
-    <Button
-        android:id="@+id/filledButton"
-        style="@style/Widget.Material3.Button"
-        android:layout_width="175dp"
-        android:layout_height="125dp"
-        android:layout_gravity="bottom|center"
-        android:layout_margin="50dp"
-        android:text="@string/home_button"
-        android:textStyle="bold"
-        android:textSize="25sp"
-        android:visibility="visible"
-        app:cornerRadius="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
 </FrameLayout>

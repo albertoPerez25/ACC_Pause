@@ -1,8 +1,13 @@
 <resources>
-    <string name="app_name">ACC Pause</string>
-    <string name="home_button">Disable charging</string>
-    <string name="nav_item1">Stats</string>
-    <string name="nav_item2">ACC Configs</string>
+    <string name="app_name">Simple ACC</string>
+    <string name="home_disable_charging">Disable charging</string>
+    <string name="home_enable_charging">Enable charging</string>
+    <string name="stat_name_temp">Temp</string>
+    <string name="stat_name_current">Current</string>
+    <string name="stat_name_level">Level</string>
+    <string name="stat_name_state">State</string>
+    <string name="stat_name_charging">Charging</string>
+    <string name="stat_name_power">Power</string>
     <string name="charging_capacity_label">Charging capacity</string>
     <string name="acc_daemon_enable_label">ACC daemon</string>
     <string name="acc_daemon_enable_description">Enable the ACC daemon.</string>
@@ -12,19 +17,15 @@
     <string name="temp_limit_label">Temperature limit</string>
     <string name="fake_passthr_label">Fake pass through</string>
     <string name="fake_passthr_description">Sets the resume charging value one percent lower than the pause limit.</string>
-    <string name="save_button">Save</string>
-    <!-- Strings used for fragments for navigation -->
+    <string name="save_button">Apply</string>
     <string name="charge_once_to_title">Charge once to…</string>
     <string name="level_to_charge_to_string">Level to charge to</string>
     <string name="voltage_limit_label">Current limit</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="nav_item1">Stats</string>
+    <string name="nav_item2">ACC Configs</string>
     <!-- Placeholders -->
     <string name="charging_capacity_description">Stop charging at %1$s%%. Resume charging at %2$s%%.</string>
     <string name="temp_limit_description">Stop charging at %1$s ºC. Resume charging at %2$s ºC.</string>
     <string name="charging_current_description">Limit charging to %1$s mA.</string>
-    <string name="stat_name_temp">Temp</string>
-    <string name="stat_name_current">Current</string>
-    <string name="stat_name_level">Level</string>
-    <string name="stat_name_state">State</string>
-    <string name="stat_name_charging">Charging</string>
-    <string name="stat_name_power">Power</string>
 </resources>

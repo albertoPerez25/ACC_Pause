@@ -77,8 +77,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_marginTop="16dp"
-            app:icon="@drawable/arrow_back_24dp"
+            app:icon="@drawable/check_24px"
             android:text="@string/save_button">
+
         </com.google.android.material.button.MaterialButton>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

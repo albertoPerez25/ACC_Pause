@@ -1,5 +1,6 @@
-package com.alba.accpause;
+package com.alba.simpleacc;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import com.google.android.material.appbar.MaterialToolbar;
@@ -17,7 +18,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.alba.accpause.databinding.ActivityChargeOnceBinding;
+import com.alba.simpleacc.databinding.ActivityChargeOnceBinding;
 
 import java.io.IOException;
 
@@ -30,10 +31,12 @@ public class ChargeOnceActivity extends AppCompatActivity {
     private Slider chargeToCurrentSlider;
     private String chargeToValue;
     private float chargeToCurrentValue;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = getApplicationContext();
 
         binding = ActivityChargeOnceBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -58,9 +61,11 @@ public class ChargeOnceActivity extends AppCompatActivity {
 
                 try {
                     if (chargeToCurrentValue == 0) // current unlimited
-                        Runtime.getRuntime().exec("su -c /dev/acca -f "+finalChargeToValue);
+                        Runtime.getRuntime().exec(context.getString(R.string.command_charge_once)
+                                +finalChargeToValue);
                     else
-                        Runtime.getRuntime().exec("su -c /dev/acca -f "+chargeToValue+" "+chargeToCurrentValue);
+                        Runtime.getRuntime().exec(context.getString(R.string.command_charge_once)
+                                +chargeToValue+" "+chargeToCurrentValue);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }

@@ -1,4 +1,4 @@
-package com.alba.accpause.database;
+package com.alba.simpleacc.database;
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
 

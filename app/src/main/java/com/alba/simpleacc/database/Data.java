@@ -1,4 +1,4 @@
-package com.alba.accpause.database;
+package com.alba.simpleacc.database;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;

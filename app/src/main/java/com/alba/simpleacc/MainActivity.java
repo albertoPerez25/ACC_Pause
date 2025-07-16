@@ -1,4 +1,4 @@
-package com.alba.accpause;
+package com.alba.simpleacc;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.os.VibratorManager;
 import android.view.MenuItem;
 import android.os.VibrationEffect;
 
-import com.alba.accpause.databinding.LayoutBottomNavigationBinding;
+import com.alba.simpleacc.databinding.LayoutBottomNavigationBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
@@ -18,11 +18,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.alba.accpause.databinding.ActivityMainBinding;
+import com.alba.simpleacc.databinding.ActivityMainBinding;
 import com.google.android.material.color.DynamicColors;
 import com.google.android.material.navigation.NavigationBarView;
-
-import com.alba.accpause.HomeFragment;
 
 public class MainActivity extends AppCompatActivity {
 

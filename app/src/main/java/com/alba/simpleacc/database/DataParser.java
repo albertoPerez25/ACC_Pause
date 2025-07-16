@@ -1,11 +1,11 @@
-package com.alba.accpause.database;
+package com.alba.simpleacc.database;
 import android.content.Context;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import com.alba.accpause.ACCPause;
+import com.alba.simpleacc.ACCPause;
 
 public class DataParser {
     public static int updateConfigsDatabase(String command, Context context) {

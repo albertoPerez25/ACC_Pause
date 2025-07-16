@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="command_disable_charging">"su -c /dev/acca --disable"</string>
+    <string name="command_enable_charging">su -c /dev/acca --enable</string>
+    <string name="command_start_acc">su -c /dev/accd</string>
+    <string name="command_stop_acc">su -c /dev/accd.</string>
+    <string name="command_pass_through_enable">su -c /dev/acca --set prioritize_batt_idle_mode=true</string>
+    <string name="command_pass_through_disable">su -c /dev/acca  --set prioritize_batt_idle_mode=false</string>
+    <string name="command_resume_temp">su -c /dev/acca --set resume_temp=</string>
+    <string name="command_max_temp">su -c /dev/acca --set max_temp=</string>
+    <string name="command_default_current">su -c /dev/acca --set --current -</string>
+    <string name="command_max_current">su -c /dev/acca --set --current </string>
+    <string name="command_charge_once">"su -c /dev/acca -f "</string>
+    <string name="command_resume_pause_capacity">"su -c /dev/acca "</string>
+</resources>
