@@ -37,6 +37,11 @@ public class ConfigsFragment extends Fragment {
     private TextView capacityLabel;
     private TextView currentLabel;
     private MaterialSwitch fakePassThrSwitch;
+    private MaterialSwitch forceOffSwitch;
+    private MaterialSwitch offMidSwitch;
+    private MaterialSwitch idleAboveSwitch;
+    private MaterialSwitch statusWorkaroundSwitch;
+    private MaterialSwitch currentWorkaroundSwitch;
     private Slider passThrSlider;
     private RangeSlider tempSlider;
     private TextView tempLabel;
@@ -65,8 +70,18 @@ public class ConfigsFragment extends Fragment {
 
         enableDaemonSwitch = view.findViewById(R.id.mySwitch);
         fakePassThrSwitch = view.findViewById(R.id.fakePassThrSwitch);
+        forceOffSwitch = view.findViewById(R.id.forceOffSwitch);
+        offMidSwitch = view.findViewById(R.id.offMidSwitch);
+        idleAboveSwitch = view.findViewById(R.id.idleAboveSwitch);
+        statusWorkaroundSwitch = view.findViewById(R.id.statusWorkaroundSwitch);
+        currentWorkaroundSwitch = view.findViewById(R.id.currentWorkaroundSwitch);
         ConstraintLayout enableDaemonLabel = view.findViewById(R.id.daemonLabel);
         ConstraintLayout fakePassThrLabel = view.findViewById(R.id.fakePassThrLabel);
+        ConstraintLayout forceOffLabel = view.findViewById(R.id.forceOffLabel);
+        ConstraintLayout offMidLabel = view.findViewById(R.id.offMidLabel);
+        ConstraintLayout idleAboveLabel = view.findViewById(R.id.idleAboveLabel);
+        ConstraintLayout statusWorkaroundLabel = view.findViewById(R.id.statusWorkaroundLabel);
+        ConstraintLayout currentWorkaroundLabel = view.findViewById(R.id.currentWorkaroundLabel);
         chargeLevelSlider = view.findViewById(R.id.capacitySlider);
         currentSlider = view.findViewById(R.id.currentSlider);
         passThrSlider = view.findViewById(R.id.passThgLevelSlider);
@@ -81,6 +96,21 @@ public class ConfigsFragment extends Fragment {
 
         fakePassThrLabel.setOnClickListener(v ->
                 fakePassThrSwitch.setChecked(!fakePassThrSwitch.isChecked()));
+
+        forceOffLabel.setOnClickListener(v ->
+                forceOffSwitch.setChecked(!forceOffSwitch.isChecked()));
+
+        offMidLabel.setOnClickListener(v ->
+                offMidSwitch.setChecked(!offMidSwitch.isChecked()));
+
+        idleAboveLabel.setOnClickListener(v ->
+                idleAboveSwitch.setChecked(!idleAboveSwitch.isChecked()));
+
+        statusWorkaroundLabel.setOnClickListener(v ->
+                statusWorkaroundSwitch.setChecked(!statusWorkaroundSwitch.isChecked()));
+
+        currentWorkaroundLabel.setOnClickListener(v ->
+                currentWorkaroundSwitch.setChecked(!currentWorkaroundSwitch.isChecked()));
 
         ConstraintLayout chargeOnceLabel = view.findViewById(R.id.chargeOnceTo);
         chargeOnceLabel.setOnClickListener(v ->
@@ -118,8 +148,6 @@ public class ConfigsFragment extends Fragment {
         };
         enableDaemonSwitch.setOnCheckedChangeListener(daemonSwitch_listener);
 
-        //Snackbar.make(view, "Pass through enabled", Snackbar.LENGTH_SHORT).show();
-        //Snackbar.make(view, "Pass through disabled", Snackbar.LENGTH_SHORT).setAnchorView(R.id.configsFragment).show();
         CompoundButton.OnCheckedChangeListener passThrSwitch_listener = new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -160,6 +188,141 @@ public class ConfigsFragment extends Fragment {
             }
         };
         fakePassThrSwitch.setOnCheckedChangeListener(passThrSwitch_listener);
+
+        CompoundButton.OnCheckedChangeListener forceOffSwitch_listener = new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                boolean forceOff_enabled;
+                try {
+                    if (isChecked) {
+                        Runtime.getRuntime().exec(context.getString(R.string.command_force_off_enable));
+                        forceOff_enabled = true;
+                    } else {
+                        Runtime.getRuntime().exec(context.getString(R.string.command_force_off_disable));
+                        forceOff_enabled = false;
+                    }
+                    final boolean finalForceOff_enabled = forceOff_enabled;
+                    new Thread(() -> {
+                        DataDao dataDao = ((ACCPause) context.getApplicationContext()).getDataDao();
+                        Data d_enabled = dataDao.getByKey("force_off");
+                        d_enabled.value = Boolean.toString(finalForceOff_enabled);
+                        dataDao.update(d_enabled);
+                    }).start();
+                } catch (IOException e) {
+                    Toast.makeText(getActivity(), "Failed to get su permission", Toast.LENGTH_SHORT).show();
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        forceOffSwitch.setOnCheckedChangeListener(forceOffSwitch_listener);
+
+        CompoundButton.OnCheckedChangeListener offMidSwitch_listener = new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                boolean switch_enabled;
+                try {
+                    if (isChecked) {
+                        Runtime.getRuntime().exec(context.getString(R.string.command_off_mid_enable));
+                        switch_enabled = true;
+                    } else {
+                        Runtime.getRuntime().exec(context.getString(R.string.command_off_mid_disable));
+                        switch_enabled = false;
+                    }
+                    final boolean finalSwitch_enabled = switch_enabled;
+                    new Thread(() -> {
+                        DataDao dataDao = ((ACCPause) context.getApplicationContext()).getDataDao();
+                        Data d_enabled = dataDao.getByKey("off_mid");
+                        d_enabled.value = Boolean.toString(finalSwitch_enabled);
+                        dataDao.update(d_enabled);
+                    }).start();
+                } catch (IOException e) {
+                    Toast.makeText(getActivity(), "Failed to get su permission", Toast.LENGTH_SHORT).show();
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        offMidSwitch.setOnCheckedChangeListener(offMidSwitch_listener);
+
+        CompoundButton.OnCheckedChangeListener idleAboveSwitch_listener = new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                boolean switch_enabled;
+                try {
+                    if (isChecked) {
+                        Runtime.getRuntime().exec(context.getString(R.string.command_allow_idle_above_enable));
+                        switch_enabled = true;
+                    } else {
+                        Runtime.getRuntime().exec(context.getString(R.string.command_allow_idle_above_disable));
+                        switch_enabled = false;
+                    }
+                    final boolean finalSwitch_enabled = switch_enabled;
+                    new Thread(() -> {
+                        DataDao dataDao = ((ACCPause) context.getApplicationContext()).getDataDao();
+                        Data d_enabled = dataDao.getByKey("allow_idle_above_pcap");
+                        d_enabled.value = Boolean.toString(finalSwitch_enabled);
+                        dataDao.update(d_enabled);
+                    }).start();
+                } catch (IOException e) {
+                    Toast.makeText(getActivity(), "Failed to get su permission", Toast.LENGTH_SHORT).show();
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        idleAboveSwitch.setOnCheckedChangeListener(idleAboveSwitch_listener);
+
+        CompoundButton.OnCheckedChangeListener statusWorkaroundSwitch_listener = new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                boolean switch_enabled;
+                try {
+                    if (isChecked) {
+                        Runtime.getRuntime().exec(context.getString(R.string.command_batt_status_workaround_enable));
+                        switch_enabled = true;
+                    } else {
+                        Runtime.getRuntime().exec(context.getString(R.string.command_batt_status_workaround_disable));
+                        switch_enabled = false;
+                    }
+                    final boolean finalSwitch_enabled = switch_enabled;
+                    new Thread(() -> {
+                        DataDao dataDao = ((ACCPause) context.getApplicationContext()).getDataDao();
+                        Data d_enabled = dataDao.getByKey("batt_status_workaround");
+                        d_enabled.value = Boolean.toString(finalSwitch_enabled);
+                        dataDao.update(d_enabled);
+                    }).start();
+                } catch (IOException e) {
+                    Toast.makeText(getActivity(), "Failed to get su permission", Toast.LENGTH_SHORT).show();
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        statusWorkaroundSwitch.setOnCheckedChangeListener(statusWorkaroundSwitch_listener);
+
+        CompoundButton.OnCheckedChangeListener currentWorkaroundSwitch_listener = new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                boolean switch_enabled;
+                try {
+                    if (isChecked) {
+                        Runtime.getRuntime().exec(context.getString(R.string.command_current_workaround_enable));
+                        switch_enabled = true;
+                    } else {
+                        Runtime.getRuntime().exec(context.getString(R.string.command_current_workaround_disable));
+                        switch_enabled = false;
+                    }
+                    final boolean finalSwitch_enabled = switch_enabled;
+                    new Thread(() -> {
+                        DataDao dataDao = ((ACCPause) context.getApplicationContext()).getDataDao();
+                        Data d_enabled = dataDao.getByKey("current_workaround");
+                        d_enabled.value = Boolean.toString(finalSwitch_enabled);
+                        dataDao.update(d_enabled);
+                    }).start();
+                } catch (IOException e) {
+                    Toast.makeText(getActivity(), "Failed to get su permission", Toast.LENGTH_SHORT).show();
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        currentWorkaroundSwitch.setOnCheckedChangeListener(currentWorkaroundSwitch_listener);
 
         passThrSlider.addOnChangeListener(new Slider.OnChangeListener() {
             @Override
@@ -273,7 +436,27 @@ public class ConfigsFragment extends Fragment {
             float tempUpperValue;
             String tempLowerString;
             String tempUpperString;
-            boolean acc_enabled_from_db = true; // Default value
+            boolean acc_enabled_from_db = false; // Default value
+            boolean prioritizeBattIdleMode = false;
+            boolean forceOff = false;
+            boolean offMid = false;
+            boolean allowIdleAbovePcap = false;
+            boolean battStatusWorkaround = false;
+            boolean currentWorkaround = false;
+
+                    /*
+* <string name="command_force_off_enable">su -c /dev/acca --set forceOff=true</string>
+    <string name="command_force_off_disable">su -c /dev/acca --set forceOff=false</string>
+    <string name="command_off_mid_enable">su -c /dev/acca --set offMid=true</string>
+    <string name="command_off_mid_disable">su -c /dev/acca --set offMid=false</string>
+    <string name="command_allow_idle_above_enable">su -c /dev/acca --set allowIdleAbovePcap=true</string>
+    <string name="command_allow_idle_above_disable">su -c /dev/acca --set allowIdleAbovePcap=false</string>
+    <string name="command_batt_status_workaround_enable">su -c /dev/acca --set battStatusWorkaround=true</string>
+    <string name="command_batt_status_workaround_disable">su -c /dev/acca --set battStatusWorkaround=false</string>
+    <string name="command_current_workaround_enable">su -c /dev/acca --set currentWorkaround=true</string>
+    <string name="command_current_workaround_disable">su -c /dev/acca --set currentWorkaround=false</string>
+
+                    * */
 
             try {
                 ACCPause.databaseInitialized.await();
@@ -303,13 +486,6 @@ public class ConfigsFragment extends Fragment {
                 }
 
                 List<Float> initialValues = Arrays.asList(chargeLevelLowerValue, chargeLevelUpperValue);
-
-                boolean prioritizeBattIdleMode = false;
-                key = "prioritize_batt_idle_mode";
-                value = dataDao.getByKey(key).value;
-                if (value != null && value.equals("true")) {
-                    prioritizeBattIdleMode = true;
-                }
 
                 String currentLimitDescription = null;
                 key = "max_charging_current";
@@ -344,10 +520,47 @@ public class ConfigsFragment extends Fragment {
 
                 List<Float> tempInitialValues = Arrays.asList(tempLowerValue, tempUpperValue);
 
+                // Switches
+                key = "prioritize_batt_idle_mode";
+                value = dataDao.getByKey(key).value;
+                if (value != null && value.equals("true")) {
+                    prioritizeBattIdleMode = true;
+                }
+
+                key = "force_off";
+                value = dataDao.getByKey(key).value;
+                if (value != null && value.equals("true")) {
+                    forceOff = true;
+                }
+
+                key = "off_mid";
+                value = dataDao.getByKey(key).value;
+                if (value != null && value.equals("true")) {
+                    offMid = true;
+                }
+
+                key = "allow_idle_above_pcap";
+                value = dataDao.getByKey(key).value;
+                if (value != null && value.equals("true")) {
+                    allowIdleAbovePcap = true;
+                }
+
+                key = "batt_status_workaround";
+                value = dataDao.getByKey(key).value;
+                if (value != null && value.equals("true")) {
+                    battStatusWorkaround = true;
+                }
+
+                key = "current_workaround";
+                value = dataDao.getByKey(key).value;
+                if (value != null && value.equals("true")) {
+                    currentWorkaround = true;
+                }
+
                 key = "daemon_enabled";
                 value = dataDao.getByKey(key).value;
-                if (value != null) {
-                    acc_enabled_from_db = Boolean.parseBoolean(value);
+                if (value != null && value.equals("true")) {
+                    acc_enabled_from_db = true;
                 }
 
                 // Post UI updates to the main thread.
@@ -362,6 +575,11 @@ public class ConfigsFragment extends Fragment {
                     final String finalTempUpperString = tempUpperString;
                     final List<Float> finalTempInitialValues = tempInitialValues;
                     final boolean finalAccEnabledFromDb = acc_enabled_from_db;
+                    final boolean finalForceOff = forceOff;
+                    final boolean finalOffMid = offMid;
+                    final boolean finalAllowIdleAbovePcap = allowIdleAbovePcap;
+                    final boolean finalBattStatusWorkaround = battStatusWorkaround;
+                    final boolean finalCurrentWorkaround = currentWorkaround;
 
                     getActivity().runOnUiThread(() -> {
                         chargeLevelSlider.setValues(finalInitialValues);
@@ -391,6 +609,21 @@ public class ConfigsFragment extends Fragment {
                         enableDaemonSwitch.setChecked(finalAccEnabledFromDb);
                         enableDaemonSwitch.jumpDrawablesToCurrentState(); // Update visual state immediately
                         enableDaemonSwitch.setOnCheckedChangeListener(daemonSwitch_listener); // Re-add the listener
+
+                        offMidSwitch.setChecked(finalOffMid);
+                        offMidSwitch.jumpDrawablesToCurrentState(); // Update visual state immediately
+
+                        forceOffSwitch.setChecked(finalForceOff);
+                        forceOffSwitch.jumpDrawablesToCurrentState(); // Update visual state immediately
+
+                        idleAboveSwitch.setChecked(finalAllowIdleAbovePcap);
+                        idleAboveSwitch.jumpDrawablesToCurrentState(); // Update visual state immediately
+
+                        statusWorkaroundSwitch.setChecked(finalBattStatusWorkaround);
+                        statusWorkaroundSwitch.jumpDrawablesToCurrentState(); // Update visual state immediately
+
+                        currentWorkaroundSwitch.setChecked(finalCurrentWorkaround);
+                        currentWorkaroundSwitch.jumpDrawablesToCurrentState(); // Update visual state immediately
                     });
                 }
 

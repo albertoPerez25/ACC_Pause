@@ -1,5 +1,6 @@
 package com.alba.simpleacc.database;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -24,4 +25,7 @@ public interface DataDao {
     void update(Data data);
     @Update
     void updateAll(Data... data);
+
+    @Delete
+    void deleteAll(Data... data);
 }

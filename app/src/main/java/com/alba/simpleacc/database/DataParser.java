@@ -42,7 +42,7 @@ public class DataParser {
                 }
 
                 data[i] = new Data();
-                //data[i].id = i;
+                data[i].id = i;
                 data[i].key = parts[0];
                 data[i].value = parts[1];
                 i++;
@@ -76,6 +76,7 @@ public class DataParser {
             exitCode = process.waitFor();
 
             data[i] = new Data();
+            data[i].id = i;
             data[i].key = "daemon_enabled";
             if (exitCode == 0) {
                 data[i].value = "true";

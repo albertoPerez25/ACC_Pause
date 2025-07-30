@@ -28,6 +28,7 @@ android {
                     "proguard-rules.pro"
             )
         }
+
     }
 
     compileOptions {

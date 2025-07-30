@@ -15,8 +15,20 @@
     <string name="charge_once_description">One-time charge to a value with optional current limit.</string>
     <string name="charging_current_description_no_limit">No limit currently set</string>
     <string name="temp_limit_label">Temperature limit</string>
+    <!-- Switches -->
     <string name="fake_passthr_label">Fake pass through</string>
     <string name="fake_passthr_description">Sets the resume charging value one percent lower than the pause limit.</string>
+    <string name="force_off_label">Force off</string>
+    <string name="force_off_description">Enable as last resort if the system re-enables charging.</string>
+    <string name="off_mid_label">Off mid</string>
+    <string name="off_mid_description">Turns off charging after rebooting the system or restarting accd.</string>
+    <string name="allow_idle_above_label">Allow idle above</string>
+    <string name="allow_idle_above_description"> Allow idle mode (if possible) when the battery level is above the pause capacity.</string>
+    <string name="batt_status_workaround_label">Battery status workaround</string>
+    <string name="batt_status_workaround_description">Boosts compatibility at the risk of breaking things.</string>
+    <string name="current_workaround_label">Current workaround</string>
+    <string name="current_workaround_description">Enable if low current values do not work.</string>
+
     <string name="save_button">Apply</string>
     <string name="charge_once_to_title">Charge once to…</string>
     <string name="level_to_charge_to_string">Level to charge to</string>
