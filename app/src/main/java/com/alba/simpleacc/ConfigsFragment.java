@@ -444,20 +444,6 @@ public class ConfigsFragment extends Fragment {
             boolean battStatusWorkaround = false;
             boolean currentWorkaround = false;
 
-                    /*
-* <string name="command_force_off_enable">su -c /dev/acca --set forceOff=true</string>
-    <string name="command_force_off_disable">su -c /dev/acca --set forceOff=false</string>
-    <string name="command_off_mid_enable">su -c /dev/acca --set offMid=true</string>
-    <string name="command_off_mid_disable">su -c /dev/acca --set offMid=false</string>
-    <string name="command_allow_idle_above_enable">su -c /dev/acca --set allowIdleAbovePcap=true</string>
-    <string name="command_allow_idle_above_disable">su -c /dev/acca --set allowIdleAbovePcap=false</string>
-    <string name="command_batt_status_workaround_enable">su -c /dev/acca --set battStatusWorkaround=true</string>
-    <string name="command_batt_status_workaround_disable">su -c /dev/acca --set battStatusWorkaround=false</string>
-    <string name="command_current_workaround_enable">su -c /dev/acca --set currentWorkaround=true</string>
-    <string name="command_current_workaround_disable">su -c /dev/acca --set currentWorkaround=false</string>
-
-                    * */
-
             try {
                 ACCPause.databaseInitialized.await();
 
