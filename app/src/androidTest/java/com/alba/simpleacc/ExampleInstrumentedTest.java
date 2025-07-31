@@ -1,4 +1,4 @@
-package com.alba.accpause;
+package com.alba.simpleacc;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.alba.accpause", appContext.getPackageName());
+        assertEquals("com.alba.simpleacc", appContext.getPackageName());
     }
 }

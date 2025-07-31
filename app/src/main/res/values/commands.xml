@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="command_disable_charging">"su -c /dev/acca --disable"</string>
+    <string name="command_enable_charging">su -c /dev/acca --enable</string>
+    <string name="command_start_acc">su -c /dev/accd</string>
+    <string name="command_stop_acc">su -c /dev/accd.</string>
+    <string name="command_resume_temp">su -c /dev/acca --set resume_temp=</string>
+    <string name="command_max_temp">su -c /dev/acca --set max_temp=</string>
+    <string name="command_default_current">su -c /dev/acca --set --current -</string>
+    <string name="command_max_current">su -c /dev/acca --set --current </string>
+    <string name="command_charge_once">"su -c /dev/acca -f "</string>
+    <string name="command_resume_pause_capacity">"su -c /dev/acca "</string>
+    <string name="command_pass_through_enable">su -c /dev/acca --set prioritize_batt_idle_mode=true</string>
+    <string name="command_pass_through_disable">su -c /dev/acca  --set prioritize_batt_idle_mode=false</string>
+    <string name="command_force_off_enable">su -c /dev/acca --set force_off=true</string>
+    <string name="command_force_off_disable">su -c /dev/acca --set force_off=false</string>
+    <string name="command_off_mid_enable">su -c /dev/acca --set off_mid=true</string>
+    <string name="command_off_mid_disable">su -c /dev/acca --set off_mid=false</string>
+    <string name="command_allow_idle_above_enable">su -c /dev/acca --set allow_idle_above_pcap=true</string>
+    <string name="command_allow_idle_above_disable">su -c /dev/acca --set allow_idle_above_pcap=false</string>
+    <string name="command_batt_status_workaround_enable">su -c /dev/acca --set batt_status_workaround=true</string>
+    <string name="command_batt_status_workaround_disable">su -c /dev/acca --set batt_status_workaround=false</string>
+    <string name="command_current_workaround_enable">su -c /dev/acca --set current_workaround=true</string>
+    <string name="command_current_workaround_disable">su -c /dev/acca --set current_workaround=false</string>
+
+</resources>

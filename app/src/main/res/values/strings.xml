@@ -1,12 +1,43 @@
 <resources>
-    <string name="app_name">ACC Pause</string>
-    <string name="home_button">CHARGE</string>
-    <string name="nav_item1">Charge</string>
-    <string name="nav_item2">ACC Values</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="app_name">Simple ACC</string>
+    <string name="home_disable_charging">Disable charging</string>
+    <string name="home_enable_charging">Enable charging</string>
+    <string name="stat_name_temp">Temp</string>
+    <string name="stat_name_current">Current</string>
+    <string name="stat_name_level">Level</string>
+    <string name="stat_name_state">State</string>
+    <string name="stat_name_charging">Charging</string>
+    <string name="stat_name_power">Power</string>
     <string name="charging_capacity_label">Charging capacity</string>
     <string name="acc_daemon_enable_label">ACC daemon</string>
-    <string name="acc_daemon_enable_description">Enable the ACC daemon</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="acc_daemon_enable_description">Enable the ACC daemon.</string>
+    <string name="charge_once_label">Charge once to…</string>
+    <string name="charge_once_description">One-time charge to a value with optional current limit.</string>
+    <string name="charging_current_description_no_limit">No limit currently set</string>
+    <string name="temp_limit_label">Temperature limit</string>
+    <!-- Switches -->
+    <string name="fake_passthr_label">Fake pass through</string>
+    <string name="fake_passthr_description">Sets the resume charging value one percent lower than the pause limit.</string>
+    <string name="force_off_label">Force off</string>
+    <string name="force_off_description">Enable as last resort if the system re-enables charging.</string>
+    <string name="off_mid_label">Off mid</string>
+    <string name="off_mid_description">Turns off charging after rebooting the system or restarting accd.</string>
+    <string name="allow_idle_above_label">Allow idle above</string>
+    <string name="allow_idle_above_description"> Allow idle mode (if possible) when the battery level is above the pause capacity.</string>
+    <string name="batt_status_workaround_label">Battery status workaround</string>
+    <string name="batt_status_workaround_description">Boosts compatibility at the risk of breaking things.</string>
+    <string name="current_workaround_label">Current workaround</string>
+    <string name="current_workaround_description">Enable if low current values do not work.</string>
+
+    <string name="save_button">Apply</string>
+    <string name="charge_once_to_title">Charge once to…</string>
+    <string name="level_to_charge_to_string">Level to charge to</string>
+    <string name="voltage_limit_label">Current limit</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="nav_item1">Stats</string>
+    <string name="nav_item2">ACC Configs</string>
+    <!-- Placeholders -->
+    <string name="charging_capacity_description">Stop charging at %1$s%%. Resume charging at %2$s%%.</string>
+    <string name="temp_limit_description">Stop charging at %1$s ºC. Resume charging at %2$s ºC.</string>
+    <string name="charging_current_description">Limit charging to %1$s mA.</string>
 </resources>

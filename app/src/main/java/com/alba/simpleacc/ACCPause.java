@@ -1,13 +1,16 @@
-package com.alba.accpause;
+package com.alba.simpleacc;
 
 import android.app.Application;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.room.Room;
 
-import com.alba.accpause.database.AppDatabase;
-import com.alba.accpause.database.DataDao;
-import com.alba.accpause.database.ProcessParser;
+import com.alba.simpleacc.database.AppDatabase;
+import com.alba.simpleacc.database.DataDao;
+import com.alba.simpleacc.database.DataParser;
 import com.google.android.material.color.DynamicColors;
+
+import java.util.concurrent.CountDownLatch;
 
 public class ACCPause extends Application {
 
@@ -18,6 +21,8 @@ public class ACCPause extends Application {
         this.updateDatabase();
         DynamicColors.applyToActivitiesIfAvailable(this);
         database = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "ACC_configs").build();
+        // Force dark mode for the entire application (just till it is completed)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
     }
 
     public AppDatabase getDatabase() {
@@ -30,8 +35,10 @@ public class ACCPause extends Application {
 
     private void updateDatabase(){
         new Thread(() -> {
-            ProcessParser.updateConfigsDatabase("/dev/acc --set",getApplicationContext());
+            DataParser.updateConfigsDatabase("/dev/acc --set",getApplicationContext());
+            databaseInitialized.countDown();
         }).start();
     }
+    public static CountDownLatch databaseInitialized = new CountDownLatch(1);
 }
 

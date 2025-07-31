@@ -1,4 +1,4 @@
-package com.alba.accpause.database;
+package com.alba.simpleacc.database;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 
 @Entity
 public class Data {
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     public int id;
     @ColumnInfo(name = "key")
     public String key;

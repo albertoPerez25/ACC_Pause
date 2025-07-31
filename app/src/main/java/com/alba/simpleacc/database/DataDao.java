@@ -1,6 +1,8 @@
-package com.alba.accpause.database;
+package com.alba.simpleacc.database;
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -16,11 +18,14 @@ public interface DataDao {
 
     @Insert
     void insertAll(Data[] data);
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Data data);
 
     @Update
     void update(Data data);
     @Update
     void updateAll(Data... data);
+
+    @Delete
+    void deleteAll(Data... data);
 }

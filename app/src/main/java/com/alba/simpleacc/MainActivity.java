@@ -1,4 +1,4 @@
-package com.alba.accpause;
+package com.alba.simpleacc;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.os.VibratorManager;
 import android.view.MenuItem;
 import android.os.VibrationEffect;
 
+import com.alba.simpleacc.databinding.LayoutBottomNavigationBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
@@ -17,16 +18,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.alba.accpause.databinding.ActivityMainBinding;
+import com.alba.simpleacc.databinding.ActivityMainBinding;
 import com.google.android.material.color.DynamicColors;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ActivityMainBinding binding;
-
+    private ActivityMainBinding activityBinding;
     private BottomNavigationView bottomNavigationView;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,18 +33,15 @@ public class MainActivity extends AppCompatActivity {
         final VibratorManager vibrator = (VibratorManager) getApplicationContext().getSystemService(Context.VIBRATOR_MANAGER_SERVICE);
         final VibrationEffect click = VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        activityBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(activityBinding.getRoot());
         DynamicColors.applyToActivityIfAvailable(this);
         final int animDuration = 200;
 
         // Get a reference to the BottomNavigationView
-        bottomNavigationView = binding.bottomNavigationView;
-
-        // Set the initial fragment
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainerView, new HomeFragment())
-                .commit();
+        android.view.View includedNavRootView = activityBinding.includedBottomNavView.getRoot();
+        LayoutBottomNavigationBinding bottomNavBinding = LayoutBottomNavigationBinding.bind(includedNavRootView);
+        bottomNavigationView = bottomNavBinding.bottomNavigationView;
 
         // Set the item selected listener
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -64,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                     exitAnimation = R.anim.fade_out;
                 } else if (itemId == R.id.item_2) {
                     vibrator.vibrate(combinedClick);
-                    selectedFragment = new FragmentConfigs();
+                    selectedFragment = new ConfigsFragment();
                     enterAnimation = R.anim.fade_in;
                     exitAnimation = R.anim.fade_out;
 
@@ -77,14 +73,15 @@ public class MainActivity extends AppCompatActivity {
 
                 getSupportFragmentManager().beginTransaction()
                         .setCustomAnimations(0, exitAnimation)
-                        .replace(R.id.fragmentContainerView, new BlankFragment())
+                        .replace(R.id.fragment_container, new BlankFragment())
                         .commit();
                 new Handler(Looper.getMainLooper()).postDelayed(() -> {
                     // Start a new transaction to replace the blank fragment with the selected fragment
                     FragmentTransaction newTransaction = getSupportFragmentManager().beginTransaction();
                     newTransaction.setCustomAnimations(finalEnterAnimation, 0); // Only fade_zoom_in for the new fragment
-                    newTransaction.replace(R.id.fragmentContainerView, finalSelectedFragment);
+                    newTransaction.replace(R.id.fragment_container, finalSelectedFragment);
                     newTransaction.commit();
+
                 }, animDuration);
                 return true;
             }
@@ -96,9 +93,7 @@ public class MainActivity extends AppCompatActivity {
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentContainerView, fragment);
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
     }
-
-
 }

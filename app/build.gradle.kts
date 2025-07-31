@@ -3,15 +3,15 @@ plugins {
 }
 
 android {
-    namespace = "com.alba.accpause"
+    namespace = "com.alba.simpleacc"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.alba.accpause"
+        applicationId = "com.alba.simpleacc"
         minSdk = 34
         targetSdk = 35
         versionCode = 1
-        versionName = "1.0"
+        versionName = "0.1-alpha"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
@@ -28,6 +28,7 @@ android {
                     "proguard-rules.pro"
             )
         }
+
     }
 
     compileOptions {
