@@ -1,6 +1,7 @@
 package com.alba.simpleacc;
 
 import android.app.Application;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.room.Room;

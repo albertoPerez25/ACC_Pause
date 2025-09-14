@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace = "com.alba.simpleacc"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.alba.simpleacc"
@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.navigation.ui)
     implementation(libs.room.runtime)
     implementation(libs.room.common)
+    implementation(libs.core)
     annotationProcessor(libs.room.compiler)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

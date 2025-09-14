@@ -8,12 +8,17 @@ import android.os.Looper;
 import android.os.VibratorManager;
 import android.view.MenuItem;
 import android.os.VibrationEffect;
+import android.view.View;
 
 import com.alba.simpleacc.databinding.LayoutBottomNavigationBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -30,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         final VibratorManager vibrator = (VibratorManager) getApplicationContext().getSystemService(Context.VIBRATOR_MANAGER_SERVICE);
         final VibrationEffect click = VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK);
 
@@ -88,6 +94,19 @@ public class MainActivity extends AppCompatActivity {
         });
         // Show the HomeFragment by default
         replaceFragment(new HomeFragment());
+
+        // To apply the insets to the root view. Fixes the content clipping with the status bar on Android 15+
+        View rootView = findViewById(R.id.fragment_container);
+
+        ViewCompat.setOnApplyWindowInsetsListener(rootView, (v, windowInsets) -> {
+            Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.statusBars());
+
+            // Apply the top inset as padding to the root view
+            v.setPadding(insets.left, insets.top, insets.right, insets.bottom);
+
+            // Return the insets so they are not consumed by other views
+            return WindowInsetsCompat.CONSUMED;
+        });
     }
 
     private void replaceFragment(Fragment fragment) {
