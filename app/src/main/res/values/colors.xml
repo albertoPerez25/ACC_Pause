@@ -9,5 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="primary">?attr/colorPrimary</color>
     <color name="material_dynamic_neutral40">#FF000000</color>
-
+    <color name="background">?attr/backgroundColor</color>"
 </resources>

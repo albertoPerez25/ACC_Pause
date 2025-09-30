@@ -5,6 +5,9 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -20,6 +23,10 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import com.alba.simpleacc.batData.BatteryInfoParser;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.shape.MaterialShapeDrawable;
+import com.google.android.material.shape.ShapeAppearanceModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -119,7 +126,38 @@ public class HomeFragment extends Fragment {
         return view;
     }
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
+        Toolbar toolbar = view.findViewById(R.id.toolbarHome);
+
+        AppBarLayout appBarLayout = view.findViewById(R.id.appBarHome);
+
+        final String collapsedTitle = "Battery Stats";
+
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isTitleVisible = true;
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                scrollRange = appBarLayout.getTotalScrollRange();
+
+                // Animate size
+                float collapseFactor = 1f - (Math.abs(verticalOffset) / (float) scrollRange);
+
+                if (collapseFactor < 0.1f && !isTitleVisible) {
+                    // Fully collapsed
+                    toolbar.setTitle(collapsedTitle);
+                    toolbar.animate().alpha(1f).setDuration(200).start();
+                    isTitleVisible = true;
+                } else if (collapseFactor > 0.1f && isTitleVisible){
+                    // Expanded or in-between
+                    toolbar.animate().alpha(0f).setDuration(200).start();
+                    isTitleVisible = false;
+
+                }
+            }
+        });
     }
 
     public void updateBatteryInfo(){

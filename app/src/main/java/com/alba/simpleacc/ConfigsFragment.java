@@ -2,12 +2,18 @@ package com.alba.simpleacc;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +23,11 @@ import android.widget.Toast;
 
 import com.alba.simpleacc.database.Data;
 import com.alba.simpleacc.database.DataDao;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.materialswitch.MaterialSwitch;
+import com.google.android.material.shape.MaterialShapeDrawable;
+import com.google.android.material.shape.ShapeAppearanceModel;
 import com.google.android.material.slider.RangeSlider;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.snackbar.Snackbar;
@@ -25,6 +35,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 
 public class ConfigsFragment extends Fragment {
@@ -384,7 +395,7 @@ public class ConfigsFragment extends Fragment {
                         Runtime.getRuntime().exec(context.getString(R.string.command_max_current) + finalCurrentValue);
                         currentLabel.setText(getString(R.string.charging_current_description,finalCurrentValue));
                     }
-                    Snackbar.make(view, finalCurrentValue, Snackbar.LENGTH_SHORT).show();
+                    //Snackbar.make(view, finalCurrentValue, Snackbar.LENGTH_SHORT).show();
 
                     new Thread(() -> {
                         DataDao dataDao = ((ACCPause) context.getApplicationContext()).getDataDao();
@@ -424,6 +435,55 @@ public class ConfigsFragment extends Fragment {
     }
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+
+        CollapsingToolbarLayout collapsingToolbar = view.findViewById(R.id.collapsingToolbar);
+
+        // Background like some custom roms android 12 background headers with rounded bottom corners
+        ShapeAppearanceModel shapeAppearanceModel = ShapeAppearanceModel.builder(
+                getContext(),
+                R.style.ShapeAppearance_CollapsingToolbar,
+                0
+        ).build();
+
+        // Create MaterialShapeDrawable with desired fill color
+        MaterialShapeDrawable materialShapeDrawable = new MaterialShapeDrawable(shapeAppearanceModel);
+        int color = ContextCompat.getColor(requireContext(), R.color.black); // e.g. R.color.primaryColor
+        materialShapeDrawable.setFillColor(ColorStateList.valueOf(color));
+
+        // Apply the drawable as background
+        ViewCompat.setBackground(collapsingToolbar, materialShapeDrawable);
+
+        AppBarLayout appBarLayout = view.findViewById(R.id.appBar);
+
+        final String collapsedTitle = "ACC Configurations";
+
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isTitleVisible = true;
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                scrollRange = appBarLayout.getTotalScrollRange();
+
+                // Animate size
+                float collapseFactor = 1f - (Math.abs(verticalOffset) / (float) scrollRange);
+
+                if (collapseFactor < 0.1f && !isTitleVisible) {
+                    // Fully collapsed
+                    toolbar.setTitle(collapsedTitle);
+                    toolbar.animate().alpha(1f).setDuration(200).start();
+                    isTitleVisible = true;
+                } else if (collapseFactor > 0.1f && isTitleVisible){
+                    // Expanded or in-between
+                    toolbar.animate().alpha(0f).setDuration(200).start();
+                    isTitleVisible = false;
+
+                }
+            }
+        });
 
         new Thread(() -> {
 

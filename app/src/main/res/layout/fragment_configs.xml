@@ -1,651 +1,752 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ConfigsFragment"
-    android:id="@+id/configsFragment">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
+    <!-- AppBar with CollapsingToolbarLayout -->
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:fitsSystemWindows="true"
+        android:background="@color/black">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:expandedTitleTextAppearance="@style/CollapsingToolbarExpanded"
+            app:collapsedTitleTextAppearance="@style/CollapsingToolbarCollapsed"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:titleEnabled="false"
+            android:fitsSystemWindows="true"
+            >
+            <!-- Custom Title (this allows to animate the transition)-->
+            <TextView
+                android:id="@+id/titleView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
+                android:maxLines="2"
+                android:text="ACC\nConfigurations"
+                android:textColor="@color/white"
+                android:textSize="40sp"
+                android:textStyle="bold" />
+
+            <!-- Toolbar -->
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:title="ACC Configurations"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:id="@+id/configsFragment">
 
         <LinearLayout
-            android:layout_width="379dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingHorizontal="0dp"
-            android:paddingVertical="0dp">
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingTop="16dp">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:paddingHorizontal="16dp"
+                android:layout_width="364dp"
                 android:layout_height="wrap_content"
-                android:foreground="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:paddingVertical="16dp"
-                android:id="@+id/daemonLabel">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/mySwitch"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-                    <TextView
-                        android:clickable="false"
-                        android:focusable="false"
+                android:orientation="horizontal"
+                android:paddingVertical="0dp"
+                android:background="@drawable/rounded_rectangle_background">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingVertical="16dp"
+                    android:id="@+id/daemonLabel">
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_gravity="start|center_vertical"
-                        android:padding="0dp"
-                        android:stepSize="5.0"
-                        android:text="@string/acc_daemon_enable_label"
-                        android:valueFrom="0.0"
-                        android:valueTo="100.0"
+                        android:orientation="vertical"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/mySwitch"
                         app:layout_constraintHorizontal_bias="0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:textSize="20sp"
-                        />
-                    <TextView
-                        android:clickable="false"
-                        android:focusable="false"
+                        app:layout_constraintTop_toTopOf="parent">
+                        <TextView
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="start|center_vertical"
+                            android:padding="0dp"
+                            android:stepSize="5.0"
+                            android:text="@string/acc_daemon_enable_label"
+                            android:valueFrom="0.0"
+                            android:valueTo="100.0"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/mySwitch"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:textSize="20sp"
+                            />
+                        <TextView
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start|center_vertical"
+                            android:padding="0dp"
+                            android:stepSize="5.0"
+                            android:text="@string/acc_daemon_enable_description"
+                            android:valueFrom="0.0"
+                            android:valueTo="100.0"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/mySwitch"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </LinearLayout>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/mySwitch"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start|center_vertical"
-                        android:padding="0dp"
-                        android:stepSize="5.0"
-                        android:text="@string/acc_daemon_enable_description"
-                        android:valueFrom="0.0"
-                        android:valueTo="100.0"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/mySwitch"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_height="match_parent"
+                        android:checked="true"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-                </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
 
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/mySwitch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="20dp"
-                    android:checked="true"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/charging_capacity_label"
-            android:textSize="20sp"
-            />
-        <!-- Discrete slider -->
-        <com.google.android.material.slider.RangeSlider
-            android:id="@+id/capacitySlider"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:stepSize="5.0"
-            android:valueFrom="0.0"
-            android:valueTo="100.0"
-            app:values="@array/initial_slider_values"
-            />
-        <com.google.android.material.slider.Slider
-            android:id="@+id/passThgLevelSlider"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            android:stepSize="5.0"
-            android:valueFrom="0.0"
-            android:valueTo="100.0"
-            app:values="@array/initial_slider_values"/>
-        <TextView
-            android:id="@+id/capacityLabel"
-            android:clickable="false"
-            android:focusable="false"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start|center_vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:paddingTop="1dp"
-            android:paddingBottom="5dp"/>
-
-        <LinearLayout
-            android:layout_width="379dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingHorizontal="0dp"
-            android:paddingVertical="0dp">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="1dp"
+                android:paddingHorizontal="16dp"
+                android:layout_width="364dp"
                 android:layout_height="wrap_content"
                 android:foreground="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
-                android:paddingVertical="16dp"
-                android:id="@+id/fakePassThrLabel">
-                <LinearLayout
+                android:orientation="vertical"
+                android:background="@drawable/card_background_top">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/charging_capacity_label"
+                    android:textSize="20sp"
+                    />
+                <!-- Discrete slider -->
+                <com.google.android.material.slider.RangeSlider
+                    android:id="@+id/capacitySlider"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:stepSize="5.0"
+                    android:valueFrom="0.0"
+                    android:valueTo="100.0"
+                    app:values="@array/initial_slider_values"
+                    />
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/passThgLevelSlider"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    android:stepSize="5.0"
+                    android:valueFrom="0.0"
+                    android:valueTo="100.0"
+                    app:values="@array/initial_slider_values"/>
+                <TextView
+                    android:id="@+id/capacityLabel"
+                    android:clickable="false"
+                    android:focusable="false"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
+                    android:layout_gravity="start|center_vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/fakePassThrSwitch"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-                    <TextView
-                        android:clickable="false"
-                        android:focusable="false"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:paddingTop="1dp"
+                    android:paddingBottom="5dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:paddingHorizontal="16dp"
+                android:layout_width="364dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="0dp"
+                android:background="@drawable/card_background_middle">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingVertical="16dp"
+                    android:id="@+id/fakePassThrLabel">
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_gravity="start|center_vertical"
-                        android:padding="0dp"
-                        android:stepSize="5.0"
-                        android:text="@string/fake_passthr_label"
-                        android:valueFrom="0.0"
-                        android:valueTo="100.0"
+                        android:orientation="vertical"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/fakePassThrSwitch"
                         app:layout_constraintHorizontal_bias="0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:textSize="20sp"
-                        />
+                        app:layout_constraintTop_toTopOf="parent">
+                        <TextView
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="start|center_vertical"
+                            android:padding="0dp"
+                            android:stepSize="5.0"
+                            android:text="@string/fake_passthr_label"
+                            android:valueFrom="0.0"
+                            android:valueTo="100.0"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/fakePassThrSwitch"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:textSize="20sp"
+                            />
 
-                    <TextView
-                        android:layout_width="290dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start|center_vertical"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:padding="0dp"
-                        android:stepSize="5.0"
-                        android:text="@string/fake_passthr_description"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/fakePassThrSwitch"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintStart_toStartOf="parent"
+                        <TextView
+                            android:layout_width="290dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start|center_vertical"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:padding="0dp"
+                            android:stepSize="5.0"
+                            android:text="@string/fake_passthr_description"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/fakePassThrSwitch"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </LinearLayout>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/fakePassThrSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:checked="true"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-                </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
 
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/fakePassThrSwitch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="20dp"
-                    android:checked="true"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/voltage_limit_label"
-            android:textSize="20sp" />
-        <com.google.android.material.slider.Slider
-            android:id="@+id/currentSlider"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:valueFrom="0.0"
-            android:valueTo="5000.0"
-            android:stepSize="500.0" />
-        <TextView
-            android:id="@+id/currentLabel"
-            android:clickable="false"
-            android:focusable="false"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start|center_vertical"
-            android:stepSize="5.0"
-            android:valueFrom="0.0"
-            android:valueTo="100.0"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:paddingTop="1dp"
-            android:paddingBottom="10dp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/temp_limit_label"
-            android:textSize="20sp" />
-        <com.google.android.material.slider.RangeSlider
-            android:id="@+id/tempSlider"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:valueFrom="20.0"
-            android:valueTo="55.0"
-            android:stepSize="5.0" />
-        <TextView
-            android:id="@+id/tempLabel"
-            android:clickable="false"
-            android:focusable="false"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start|center_vertical"
-            android:stepSize="5.0"
-            android:valueFrom="0.0"
-            android:valueTo="100.0"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:paddingTop="1dp"
-            android:paddingBottom="0dp"/>
-
-        <LinearLayout
-            android:layout_width="379dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingHorizontal="0dp"
-            android:paddingVertical="0dp">
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_marginVertical="1dp"
+                android:paddingHorizontal="16dp"
+                android:layout_width="364dp"
                 android:layout_height="wrap_content"
                 android:foreground="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
-                android:paddingVertical="16dp"
-                android:id="@+id/chargeOnceTo">
-                <LinearLayout
+                android:orientation="vertical"
+                android:background="@drawable/card_background_middle">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/voltage_limit_label"
+                    android:textSize="20sp"
+                    />
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/currentSlider"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:valueFrom="0.0"
+                    android:valueTo="5000.0"
+                    android:stepSize="500.0" />
+                <TextView
+                    android:id="@+id/currentLabel"
+                    android:clickable="false"
+                    android:focusable="false"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
+                    android:layout_gravity="start|center_vertical"
+                    android:stepSize="5.0"
+                    android:valueFrom="0.0"
+                    android:valueTo="100.0"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-                    <TextView
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="start|center_vertical"
-                        android:padding="0dp"
-                        android:stepSize="5.0"
-                        android:text="@string/charge_once_label"
-                        android:valueFrom="0.0"
-                        android:valueTo="100.0"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/mySwitch"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:textSize="20sp"
-                        />
-                    <TextView
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="start|center_vertical"
-                        android:padding="0dp"
-                        android:stepSize="5.0"
-                        android:text="@string/charge_once_description"
-                        android:valueFrom="0.0"
-                        android:valueTo="100.0"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/mySwitch"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </LinearLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="379dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingHorizontal="0dp"
-            android:paddingVertical="0dp">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:paddingTop="1dp"
+                    android:paddingBottom="10dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginVertical="0dp"
+                android:paddingHorizontal="16dp"
+                android:layout_width="364dp"
                 android:layout_height="wrap_content"
                 android:foreground="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
-                android:paddingVertical="16dp"
-                android:id="@+id/forceOffLabel">
-                <LinearLayout
+                android:orientation="vertical"
+                android:background="@drawable/card_background_bottom">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/temp_limit_label"
+                    android:textSize="20sp" />
+                <com.google.android.material.slider.RangeSlider
+                    android:id="@+id/tempSlider"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:valueFrom="20.0"
+                    android:valueTo="55.0"
+                    android:stepSize="5.0" />
+                <TextView
+                    android:id="@+id/tempLabel"
+                    android:clickable="false"
+                    android:focusable="false"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
+                    android:layout_gravity="start|center_vertical"
+                    android:stepSize="5.0"
+                    android:valueFrom="0.0"
+                    android:valueTo="100.0"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/forceOffSwitch"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-                    <TextView
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="start|center_vertical"
-                        android:padding="0dp"
-                        android:stepSize="5.0"
-                        android:text="@string/force_off_label"
-                        android:valueFrom="0.0"
-                        android:valueTo="100.0"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:textSize="20sp"
-                        />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:paddingTop="1dp"
+                    android:paddingBottom="0dp"/>
+            </LinearLayout>
 
-                    <TextView
-                        android:layout_width="290dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start|center_vertical"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:padding="0dp"
-                        android:stepSize="5.0"
-                        android:text="@string/force_off_description"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </LinearLayout>
-
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/forceOffSwitch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="20dp"
-                    android:checked="true"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="379dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingHorizontal="0dp"
-            android:paddingVertical="0dp">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:paddingHorizontal="16dp"
+                android:layout_width="364dp"
                 android:layout_height="wrap_content"
-                android:foreground="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:paddingVertical="16dp"
-                android:id="@+id/offMidLabel">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/offMidSwitch"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-                    <TextView
-                        android:clickable="false"
-                        android:focusable="false"
+                android:orientation="horizontal"
+                android:paddingVertical="0dp"
+                android:layout_marginVertical="16dp"
+                android:background="@drawable/rounded_rectangle_background">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingVertical="16dp"
+                    android:id="@+id/chargeOnceTo">
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_gravity="start|center_vertical"
-                        android:padding="0dp"
-                        android:stepSize="5.0"
-                        android:text="@string/off_mid_label"
-                        android:valueFrom="0.0"
-                        android:valueTo="100.0"
+                        android:orientation="vertical"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintHorizontal_bias="0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:textSize="20sp"
-                        />
-
-                    <TextView
-                        android:layout_width="290dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start|center_vertical"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:padding="0dp"
-                        android:stepSize="5.0"
-                        android:text="@string/off_mid_description"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </LinearLayout>
-
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/offMidSwitch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="20dp"
-                    android:checked="true"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="379dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingHorizontal="0dp"
-            android:paddingVertical="0dp">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+                        app:layout_constraintTop_toTopOf="parent">
+                        <TextView
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="start|center_vertical"
+                            android:padding="0dp"
+                            android:stepSize="5.0"
+                            android:text="@string/charge_once_label"
+                            android:valueFrom="0.0"
+                            android:valueTo="100.0"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/mySwitch"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:textSize="20sp"
+                            />
+                        <TextView
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="start|center_vertical"
+                            android:padding="0dp"
+                            android:stepSize="5.0"
+                            android:text="@string/charge_once_description"
+                            android:valueFrom="0.0"
+                            android:valueTo="100.0"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/mySwitch"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:paddingHorizontal="16dp"
+                android:layout_width="364dp"
                 android:layout_height="wrap_content"
-                android:foreground="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:paddingVertical="16dp"
-                android:id="@+id/idleAboveLabel">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/idleAboveSwitch"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-                    <TextView
-                        android:clickable="false"
-                        android:focusable="false"
+                android:orientation="horizontal"
+                android:paddingVertical="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/card_background_top">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingVertical="16dp"
+                    android:id="@+id/forceOffLabel">
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_gravity="start|center_vertical"
-                        android:padding="0dp"
-                        android:stepSize="5.0"
-                        android:text="@string/allow_idle_above_label"
-                        android:valueFrom="0.0"
-                        android:valueTo="100.0"
+                        android:orientation="vertical"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/forceOffSwitch"
                         app:layout_constraintHorizontal_bias="0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:textSize="20sp"
-                        />
+                        app:layout_constraintTop_toTopOf="parent">
+                        <TextView
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="start|center_vertical"
+                            android:padding="0dp"
+                            android:stepSize="5.0"
+                            android:text="@string/force_off_label"
+                            android:valueFrom="0.0"
+                            android:valueTo="100.0"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:textSize="20sp"
+                            />
 
-                    <TextView
-                        android:layout_width="290dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start|center_vertical"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:padding="0dp"
-                        android:stepSize="5.0"
-                        android:text="@string/allow_idle_above_description"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintStart_toStartOf="parent"
+                        <TextView
+                            android:layout_width="290dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start|center_vertical"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:padding="0dp"
+                            android:stepSize="5.0"
+                            android:text="@string/force_off_description"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </LinearLayout>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/forceOffSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="0dp"
+                        android:checked="true"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-                </LinearLayout>
-
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/idleAboveSwitch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="20dp"
-                    android:checked="true"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="379dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingHorizontal="0dp"
-            android:paddingVertical="0dp">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:paddingHorizontal="16dp"
+                android:layout_width="364dp"
                 android:layout_height="wrap_content"
-                android:foreground="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:paddingVertical="16dp"
-                android:id="@+id/statusWorkaroundLabel">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/statusWorkaroundSwitch"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-                    <TextView
-                        android:clickable="false"
-                        android:focusable="false"
+                android:orientation="horizontal"
+                android:paddingVertical="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/card_background_middle">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingVertical="16dp"
+                    android:id="@+id/offMidLabel">
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_gravity="start|center_vertical"
-                        android:padding="0dp"
-                        android:stepSize="5.0"
-                        android:text="@string/batt_status_workaround_label"
-                        android:valueFrom="0.0"
-                        android:valueTo="100.0"
+                        android:orientation="vertical"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/offMidSwitch"
                         app:layout_constraintHorizontal_bias="0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:textSize="20sp"
-                        />
+                        app:layout_constraintTop_toTopOf="parent">
+                        <TextView
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="start|center_vertical"
+                            android:padding="0dp"
+                            android:stepSize="5.0"
+                            android:text="@string/off_mid_label"
+                            android:valueFrom="0.0"
+                            android:valueTo="100.0"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:textSize="20sp"
+                            />
 
-                    <TextView
-                        android:layout_width="290dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start|center_vertical"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:padding="0dp"
-                        android:stepSize="5.0"
-                        android:text="@string/batt_status_workaround_description"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintStart_toStartOf="parent"
+                        <TextView
+                            android:layout_width="290dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start|center_vertical"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:padding="0dp"
+                            android:stepSize="5.0"
+                            android:text="@string/off_mid_description"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </LinearLayout>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/offMidSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="0dp"
+                        android:checked="true"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-                </LinearLayout>
-
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/statusWorkaroundSwitch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="20dp"
-                    android:checked="true"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="379dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingHorizontal="0dp"
-            android:paddingVertical="0dp">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:paddingHorizontal="16dp"
+                android:layout_width="364dp"
                 android:layout_height="wrap_content"
-                android:foreground="?attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:paddingVertical="16dp"
-                android:id="@+id/currentWorkaroundLabel">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/currentWorkaroundSwitch"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-                    <TextView
-                        android:clickable="false"
-                        android:focusable="false"
+                android:orientation="horizontal"
+                android:paddingVertical="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/card_background_middle">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingVertical="16dp"
+                    android:id="@+id/idleAboveLabel">
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_gravity="start|center_vertical"
-                        android:padding="0dp"
-                        android:stepSize="5.0"
-                        android:text="@string/current_workaround_label"
-                        android:valueFrom="0.0"
-                        android:valueTo="100.0"
+                        android:orientation="vertical"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/idleAboveSwitch"
                         app:layout_constraintHorizontal_bias="0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:textSize="20sp"
-                        />
+                        app:layout_constraintTop_toTopOf="parent">
+                        <TextView
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="start|center_vertical"
+                            android:padding="0dp"
+                            android:stepSize="5.0"
+                            android:text="@string/allow_idle_above_label"
+                            android:valueFrom="0.0"
+                            android:valueTo="100.0"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:textSize="20sp"
+                            />
 
-                    <TextView
-                        android:layout_width="290dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="start|center_vertical"
-                        android:clickable="false"
-                        android:focusable="false"
-                        android:padding="0dp"
-                        android:stepSize="5.0"
-                        android:text="@string/current_workaround_description"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintHorizontal_bias="0"
-                        app:layout_constraintStart_toStartOf="parent"
+                        <TextView
+                            android:layout_width="290dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start|center_vertical"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:padding="0dp"
+                            android:stepSize="5.0"
+                            android:text="@string/allow_idle_above_description"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </LinearLayout>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/idleAboveSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="0dp"
+                        android:checked="true"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-                </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:paddingHorizontal="16dp"
+                android:layout_width="364dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/card_background_middle">
 
-                <com.google.android.material.materialswitch.MaterialSwitch
-                    android:id="@+id/currentWorkaroundSwitch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="20dp"
-                    android:checked="true"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingVertical="16dp"
+                    android:id="@+id/statusWorkaroundLabel">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/statusWorkaroundSwitch"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+                        <TextView
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="start|center_vertical"
+                            android:padding="0dp"
+                            android:stepSize="5.0"
+                            android:text="@string/batt_status_workaround_label"
+                            android:valueFrom="0.0"
+                            android:valueTo="100.0"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:textSize="20sp"
+                            />
+
+                        <TextView
+                            android:layout_width="290dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start|center_vertical"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:padding="0dp"
+                            android:stepSize="5.0"
+                            android:text="@string/batt_status_workaround_description"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </LinearLayout>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/statusWorkaroundSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="0dp"
+                        android:checked="true"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:paddingHorizontal="16dp"
+                android:layout_width="364dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/card_background_bottom">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:paddingVertical="16dp"
+                    android:id="@+id/currentWorkaroundLabel">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/currentWorkaroundSwitch"
+                        app:layout_constraintHorizontal_bias="0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+                        <TextView
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="start|center_vertical"
+                            android:padding="0dp"
+                            android:stepSize="5.0"
+                            android:text="@string/current_workaround_label"
+                            android:valueFrom="0.0"
+                            android:valueTo="100.0"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:textSize="20sp"
+                            />
+
+                        <TextView
+                            android:layout_width="290dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start|center_vertical"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:padding="0dp"
+                            android:stepSize="5.0"
+                            android:text="@string/current_workaround_description"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintHorizontal_bias="0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </LinearLayout>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/currentWorkaroundSwitch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="0dp"
+                        android:checked="true"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
         </LinearLayout>
-
-    </LinearLayout>
-</ScrollView>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
