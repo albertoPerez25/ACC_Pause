@@ -40,4 +40,5 @@
     <string name="charging_capacity_description">Stop charging at %1$s%%. Resume charging at %2$s%%.</string>
     <string name="temp_limit_description">Stop charging at %1$s ºC. Resume charging at %2$s ºC.</string>
     <string name="charging_current_description">Limit charging to %1$s mA.</string>
+    <string name="configsExpandedTitle">ACC\nConfigurations</string>
 </resources>
