@@ -81,5 +81,14 @@
             android:text="@string/save_button">
 
         </com.google.android.material.button.MaterialButton>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:text="@string/charge_once_disable_info"
+            android:textSize="16sp"
+            android:drawableStart="@drawable/info_24px"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical" />
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

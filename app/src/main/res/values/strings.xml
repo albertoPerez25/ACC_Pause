@@ -11,8 +11,8 @@
     <string name="charging_capacity_label">Charging capacity</string>
     <string name="acc_daemon_enable_label">ACC daemon</string>
     <string name="acc_daemon_enable_description">Enable the ACC daemon.</string>
-    <string name="charge_once_label">Charge once to…</string>
-    <string name="charge_once_description">One-time charge to a value with optional current limit.</string>
+    <string name="charge_once_label">Charge to…</string>
+    <string name="charge_once_description">Maintain at a certain charge level with optional current limit.</string>
     <string name="charging_current_description_no_limit">No limit currently set</string>
     <string name="temp_limit_label">Temperature limit</string>
     <!-- Switches -->
@@ -41,4 +41,5 @@
     <string name="temp_limit_description">Stop charging at %1$s ºC. Resume charging at %2$s ºC.</string>
     <string name="charging_current_description">Limit charging to %1$s mA.</string>
     <string name="configsExpandedTitle">ACC\nConfigurations</string>
+    <string name="charge_once_disable_info">Restart the ACC Daemon manually to exit this mode.</string>
 </resources>
