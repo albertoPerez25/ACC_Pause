@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import com.alba.simpleacc.ACCPause;
+import com.alba.simpleacc.batData.BatteryInfoParser;
 
 public class DataParser {
     public static int updateConfigsDatabase(String command, Context context) {
@@ -70,15 +71,13 @@ public class DataParser {
                 i++;
             }
 
-
-            // ACC Daemon status is printed with "accd,"
-            process = Runtime.getRuntime().exec("su -c /dev/accd,");
-            exitCode = process.waitFor();
+            // ACC Daemon status
+            BatteryInfoParser batInfo = new BatteryInfoParser();
 
             data[i] = new Data();
             data[i].id = i;
             data[i].key = "daemon_enabled";
-            if (exitCode == 0) {
+            if (batInfo.getDaemonStatus()) {
                 data[i].value = "true";
             } else {
                 data[i].value = "false";

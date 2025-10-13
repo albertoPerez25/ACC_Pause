@@ -7,19 +7,22 @@ import java.util.HashMap;
 
 public class BatteryInfoParser {
     private HashMap<String,String> batInfo = new HashMap<>();
-    private final String command;
+    private final String cmdInfoBat;
+    private final String cmdDaemonStatus;
 
     public BatteryInfoParser(){
-        this.command = "/dev/acca -i";
+        this.cmdInfoBat = "/dev/acca -i";
+        this.cmdDaemonStatus = "/dev/accd,";
     }
 
-    public BatteryInfoParser(String command){
-        this.command = command;
+    public BatteryInfoParser(String cmdInfoBat, String cmdDaemonStatus){
+        this.cmdInfoBat = cmdInfoBat;
+        this.cmdDaemonStatus = cmdDaemonStatus;
     }
 
     public HashMap<String,String> getBatteryInfo() {
         try {
-            Process process = Runtime.getRuntime().exec("su -c "+command);
+            Process process = Runtime.getRuntime().exec("su -c "+ cmdInfoBat);
 
             int exitCode = process.waitFor(); // Wait for the process to finish
 
@@ -70,5 +73,22 @@ public class BatteryInfoParser {
             e.printStackTrace();
             return batInfo; // Other error //TODO
         }
+    }
+    public Boolean getDaemonStatus() {
+        // ACC Daemon status is printed with "accd,"
+        Process process = null;
+        boolean daemonEnabled = false;
+
+        try {
+            process = Runtime.getRuntime().exec("su -c "+cmdDaemonStatus);
+
+            int exitCode = process.waitFor();
+
+            daemonEnabled = exitCode == 0;
+
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        return daemonEnabled;
     }
 }

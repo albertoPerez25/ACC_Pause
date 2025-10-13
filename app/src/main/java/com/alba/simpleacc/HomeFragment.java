@@ -131,6 +131,23 @@ public class HomeFragment extends Fragment {
 
         final String collapsedTitle = "Battery Stats";
 
+        try {
+            Runtime.getRuntime().exec("su");
+
+            try {
+                Runtime.getRuntime().exec("su -c /dev/acca -i");
+            } catch (IOException e) {
+                Toast.makeText(getActivity(), "Failed to initialize ACC",
+                        Toast.LENGTH_LONG).show();
+                requireActivity().finish();
+            }
+
+        } catch (IOException e) {
+            Toast.makeText(getActivity(), "Failed to get su permission",
+                    Toast.LENGTH_LONG).show();
+            requireActivity().finish();
+        }
+
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isTitleVisible = true;
             int scrollRange = -1;
@@ -158,6 +175,7 @@ public class HomeFragment extends Fragment {
     }
 
     public void updateBatteryInfo(){
+
         HashMap<String,String> bInfo = batInfo.getBatteryInfo();
         tempValue.setText(bInfo.get("temp"));
         currentValue.setText(bInfo.get("current_now"));
@@ -165,17 +183,16 @@ public class HomeFragment extends Fragment {
         stateValue.setText(bInfo.get("status"));
         powerValue.setText(bInfo.get("power_now"));
 
-        new Thread(() -> {
-            boolean daemonEnabled;
-            String value = dataDao.getByKey("daemon_enabled").value;
-            daemonEnabled = value != null && value.equals("true");
+        boolean daemonEnabled = batInfo.getDaemonStatus();
+        if (daemonEnabled)
+            daemonValue.setText("Enabled");
+        else
+            daemonValue.setText("Disabled");
 
-            requireActivity().runOnUiThread(() -> {
-                if (daemonEnabled)
-                    daemonValue.setText("Enabled");
-                else
-                    daemonValue.setText("Disabled");
-            });
+        new Thread(() -> {
+            Data d_enabled = dataDao.getByKey("daemon_enabled");
+            d_enabled.value = Boolean.toString(daemonEnabled);
+            dataDao.update(d_enabled);
         }).start();
 
         handler.postDelayed(runnable, UPDATE_INTERVAL_MILLIS);
