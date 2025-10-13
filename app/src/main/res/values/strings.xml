@@ -6,7 +6,7 @@
     <string name="stat_name_current">Current</string>
     <string name="stat_name_level">Level</string>
     <string name="stat_name_state">State</string>
-    <string name="stat_name_charging">Charging</string>
+    <string name="stat_name_charging">Daemon</string>
     <string name="stat_name_power">Power</string>
     <string name="charging_capacity_label">Charging capacity</string>
     <string name="acc_daemon_enable_label">ACC daemon</string>

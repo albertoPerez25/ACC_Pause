@@ -1,13 +1,10 @@
 package com.alba.simpleacc;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
@@ -21,12 +18,12 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Objects;
 
 import com.alba.simpleacc.batData.BatteryInfoParser;
+import com.alba.simpleacc.database.Data;
+import com.alba.simpleacc.database.DataDao;
 import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-import com.google.android.material.shape.MaterialShapeDrawable;
-import com.google.android.material.shape.ShapeAppearanceModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,14 +43,13 @@ public class HomeFragment extends Fragment {
     private static final long UPDATE_INTERVAL_MILLIS = 2000; // ms
     private Handler handler;
     private Runnable runnable;
-
     private TextView tempValue;
     private TextView currentValue;
     private TextView levelValue;
     private TextView stateValue;
-    private TextView chargingValue;
+    private TextView daemonValue;
     private TextView powerValue;
-    private ColorStateList backgroundTintList;
+    private DataDao dataDao;
     private Context context;
 
     /**
@@ -113,8 +109,9 @@ public class HomeFragment extends Fragment {
         currentValue = view.findViewById(R.id.currentValue);
         levelValue = view.findViewById(R.id.levelValue);
         stateValue = view.findViewById(R.id.stateValue);
-        chargingValue = view.findViewById(R.id.chargingValue);
+        daemonValue = view.findViewById(R.id.daemonValue);
         powerValue = view.findViewById(R.id.powerValue);
+        dataDao = ((ACCPause) context.getApplicationContext()).getDataDao();
 
 
         //Get the material color of the button
@@ -167,10 +164,19 @@ public class HomeFragment extends Fragment {
         levelValue.setText(bInfo.get("level"));
         stateValue.setText(bInfo.get("status"));
         powerValue.setText(bInfo.get("power_now"));
-        if (chrEnabled)
-            chargingValue.setText("Enabled");
-        else
-            chargingValue.setText("Disabled");
+
+        new Thread(() -> {
+            boolean daemonEnabled;
+            String value = dataDao.getByKey("daemon_enabled").value;
+            daemonEnabled = value != null && value.equals("true");
+
+            requireActivity().runOnUiThread(() -> {
+                if (daemonEnabled)
+                    daemonValue.setText("Enabled");
+                else
+                    daemonValue.setText("Disabled");
+            });
+        }).start();
 
         handler.postDelayed(runnable, UPDATE_INTERVAL_MILLIS);
     }
