@@ -48,6 +48,7 @@ public class ConfigsFragment extends Fragment {
     private TextView capacityLabel;
     private TextView currentLabel;
     private MaterialSwitch fakePassThrSwitch;
+    private CompoundButton.OnCheckedChangeListener passThrSwitch_listener;
     private MaterialSwitch forceOffSwitch;
     private MaterialSwitch offMidSwitch;
     private MaterialSwitch idleAboveSwitch;
@@ -130,6 +131,7 @@ public class ConfigsFragment extends Fragment {
 
 
         /////////////
+
         daemonSwitch_listener = new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -158,8 +160,8 @@ public class ConfigsFragment extends Fragment {
             }
         };
         enableDaemonSwitch.setOnCheckedChangeListener(daemonSwitch_listener);
-
-        CompoundButton.OnCheckedChangeListener passThrSwitch_listener = new CompoundButton.OnCheckedChangeListener() {
+      // TODO: BUGFIX AUDIO
+        passThrSwitch_listener = new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 boolean passThr_enabled;
@@ -641,8 +643,10 @@ public class ConfigsFragment extends Fragment {
                         } else {
                             chargeLevelSlider.setVisibility(View.VISIBLE); // Ensure it's visible if not prioritized
                             passThrSlider.setVisibility(View.GONE);
+                            fakePassThrSwitch.setOnCheckedChangeListener(null);
                             fakePassThrSwitch.setChecked(false);
                             fakePassThrSwitch.jumpDrawablesToCurrentState(); // Update visual state immediately
+                            fakePassThrSwitch.setOnCheckedChangeListener(passThrSwitch_listener);
                         }
 
                         currentSlider.setValue(finalChargeCurrentValue);
