@@ -1,4 +1,4 @@
-package com.alba.simpleacc;
+package com.alba.simpleacc.ui;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -18,8 +18,9 @@ import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Objects;
 
+import com.alba.simpleacc.ACCPause;
+import com.alba.simpleacc.R;
 import com.alba.simpleacc.batData.BatteryInfoParser;
 import com.alba.simpleacc.database.Data;
 import com.alba.simpleacc.database.DataDao;

@@ -1,4 +1,4 @@
-package com.alba.simpleacc;
+package com.alba.simpleacc.ui;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,14 +6,12 @@ import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +19,9 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alba.simpleacc.ACCPause;
+import com.alba.simpleacc.ChargeOnceActivity;
+import com.alba.simpleacc.R;
 import com.alba.simpleacc.database.Data;
 import com.alba.simpleacc.database.DataDao;
 import com.google.android.material.appbar.AppBarLayout;
@@ -30,12 +31,10 @@ import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.android.material.shape.ShapeAppearanceModel;
 import com.google.android.material.slider.RangeSlider;
 import com.google.android.material.slider.Slider;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 
 public class ConfigsFragment extends Fragment {
