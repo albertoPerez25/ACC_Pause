@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId = "com.alba.simpleacc"
         minSdk = 34
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "0.0.2-alpha"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

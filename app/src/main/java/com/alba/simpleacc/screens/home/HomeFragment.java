@@ -1,4 +1,4 @@
-package com.alba.simpleacc.ui;
+package com.alba.simpleacc.screens.home;
 
 import android.content.Context;
 import android.os.Bundle;

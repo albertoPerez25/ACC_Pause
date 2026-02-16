@@ -33,7 +33,7 @@
     <string name="charge_once_to_title">Charge once to…</string>
     <string name="level_to_charge_to_string">Level to charge to</string>
     <string name="voltage_limit_label">Current limit</string>
-    <!-- Strings used for fragments for navigation -->
+    <!-- Strings used for navigation fragments -->
     <string name="nav_item1">Stats</string>
     <string name="nav_item2">ACC Configs</string>
     <!-- Placeholders -->

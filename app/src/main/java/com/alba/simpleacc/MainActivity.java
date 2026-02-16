@@ -12,8 +12,8 @@ import android.view.View;
 
 import com.alba.simpleacc.databinding.LayoutBottomNavigationBinding;
 import com.alba.simpleacc.ui.BlankFragment;
-import com.alba.simpleacc.ui.ConfigsFragment;
-import com.alba.simpleacc.ui.HomeFragment;
+import com.alba.simpleacc.screens.configs.presentation.ConfigsFragment;
+import com.alba.simpleacc.screens.home.HomeFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;

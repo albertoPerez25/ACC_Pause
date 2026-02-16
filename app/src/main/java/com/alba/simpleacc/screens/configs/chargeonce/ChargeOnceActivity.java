@@ -1,8 +1,9 @@
-package com.alba.simpleacc;
+package com.alba.simpleacc.screens.configs.chargeonce;
 
 import android.content.Context;
 import android.os.Bundle;
 
+import com.alba.simpleacc.R;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.snackbar.Snackbar;

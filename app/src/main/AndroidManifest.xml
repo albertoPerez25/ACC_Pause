@@ -17,7 +17,7 @@
         android:theme="@style/Theme.ACCPause"
         tools:targetApi="31">
         <activity
-            android:name=".ChargeOnceActivity"
+            android:name=".screens.configs.chargeonce.ChargeOnceActivity"
             android:exported="false"
             android:theme="@style/Theme.ACCPause" />
         <activity

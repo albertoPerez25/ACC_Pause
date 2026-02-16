@@ -8,6 +8,11 @@ import com.alba.simpleacc.screens.configs.domain.AppConfig;
 import com.alba.simpleacc.screens.configs.domain.ConfigsState;
 import com.alba.simpleacc.screens.configs.data.SettingsRepository;
 
+/**
+ * Bridge between the UI and data layers
+ * Manages UI state and sanitizes database values to prevent slider crashes
+ * Processes user interactions by delegating commands to the repository
+ */
 public class ConfigsViewModel extends ViewModel {
 
     private final SettingsRepository repository;
